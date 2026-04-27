@@ -3,13 +3,9 @@ import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/
 import { z } from "zod";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { format } from "date-fns";
-import { randomUUID } from "crypto";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-// Store active transports by session ID (persists across requests in the same process)
-const transports = new Map<string, WebStandardStreamableHTTPServerTransport>();
 
 // ─── Auth Helper ─────────────────────────────────────────────────────────
 async function authenticateRequest(
@@ -571,6 +567,9 @@ function createMcpServer(supabase: SupabaseClient, userId: string) {
 }
 
 // ─── POST: MCP requests (initialize, tool calls) ────────────────────────
+// Fully stateless for Vercel serverless — no in-memory session persistence.
+// Each request creates a fresh server+transport. Non-initialize requests
+// are auto-initialized so they work on cold starts / new instances.
 export async function POST(request: Request) {
   const auth = await authenticateRequest(request);
   if (!auth) {
@@ -580,55 +579,78 @@ export async function POST(request: Request) {
     );
   }
 
-  const sessionId = request.headers.get("mcp-session-id") ?? undefined;
-
-  // Existing session
-  if (sessionId && transports.has(sessionId)) {
-    const transport = transports.get(sessionId)!;
-    return transport.handleRequest(request);
-  }
-
-  // New session
-  const newSessionId = randomUUID();
-  const transport = new WebStandardStreamableHTTPServerTransport({
-    sessionIdGenerator: () => newSessionId,
-    onsessioninitialized: (id) => {
-      transports.set(id, transport);
-    },
-  });
-
-  transport.onclose = () => {
-    transports.delete(newSessionId);
-  };
-
+  // Create a fresh server + transport per request (stateless, no session tracking)
   const server = createMcpServer(auth.supabase, auth.userId);
+  const transport = new WebStandardStreamableHTTPServerTransport({
+    sessionIdGenerator: undefined, // Disable sessions for serverless
+  });
   await server.connect(transport);
 
-  return transport.handleRequest(request);
-}
-
-// ─── GET: SSE stream for server-to-client notifications ─────────────────
-export async function GET(request: Request) {
-  const sessionId = request.headers.get("mcp-session-id") ?? undefined;
-  if (!sessionId || !transports.has(sessionId)) {
+  // Read the body to check if auto-initialization is needed
+  const bodyText = await request.text();
+  let body: { method?: string } | Array<{ method?: string }>;
+  try {
+    body = JSON.parse(bodyText);
+  } catch {
     return Response.json(
-      { error: "Invalid or missing session ID" },
+      { jsonrpc: "2.0", error: { code: -32700, message: "Parse error: Invalid JSON" }, id: null },
       { status: 400 }
     );
   }
 
-  const transport = transports.get(sessionId)!;
-  return transport.handleRequest(request);
+  const method = Array.isArray(body) ? body[0]?.method : body.method;
+
+  if (method !== "initialize") {
+    // Auto-initialize for serverless cold starts
+    const initReq = new Request(request.url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json, text/event-stream",
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: "__auto_init__",
+        method: "initialize",
+        params: {
+          protocolVersion: "2025-03-26",
+          capabilities: {},
+          clientInfo: { name: "serverless-auto-init", version: "1.0.0" },
+        },
+      }),
+    });
+    await transport.handleRequest(initReq);
+
+    // Send initialized notification to complete the handshake
+    const notifReq = new Request(request.url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json, text/event-stream",
+      },
+      body: JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }),
+    });
+    await transport.handleRequest(notifReq);
+  }
+
+  // Handle the actual request with the original body
+  const actualReq = new Request(request.url, {
+    method: "POST",
+    headers: request.headers,
+    body: bodyText,
+  });
+  return transport.handleRequest(actualReq);
 }
 
-// ─── DELETE: session cleanup ─────────────────────────────────────────────
-export async function DELETE(request: Request) {
-  const sessionId = request.headers.get("mcp-session-id") ?? undefined;
-  if (sessionId && transports.has(sessionId)) {
-    const transport = transports.get(sessionId)!;
-    const response = await transport.handleRequest(request);
-    transports.delete(sessionId);
-    return response;
-  }
+// ─── GET: SSE not supported in stateless serverless mode ────────────────
+export async function GET() {
+  return Response.json(
+    { error: "SSE not supported in stateless mode. Use POST for all requests." },
+    { status: 405 }
+  );
+}
+
+// ─── DELETE: no-op in stateless mode ─────────────────────────────────────
+export async function DELETE() {
   return Response.json({ ok: true });
 }
