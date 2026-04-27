@@ -568,78 +568,91 @@ function createMcpServer(supabase: SupabaseClient, userId: string) {
 
 // ─── POST: MCP requests (initialize, tool calls) ────────────────────────
 // Fully stateless for Vercel serverless — no in-memory session persistence.
-// Each request creates a fresh server+transport. Non-initialize requests
-// are auto-initialized so they work on cold starts / new instances.
+// Each request creates a fresh server+transport and auto-initializes.
 export async function POST(request: Request) {
-  const auth = await authenticateRequest(request);
-  if (!auth) {
-    return Response.json(
-      { error: "Unauthorized. Provide a valid Supabase access token as Bearer token." },
-      { status: 401 }
-    );
-  }
-
-  // Create a fresh server + transport per request (stateless, no session tracking)
-  const server = createMcpServer(auth.supabase, auth.userId);
-  const transport = new WebStandardStreamableHTTPServerTransport({
-    sessionIdGenerator: undefined, // Disable sessions for serverless
-  });
-  await server.connect(transport);
-
-  // Read the body to check if auto-initialization is needed
-  const bodyText = await request.text();
-  let body: { method?: string } | Array<{ method?: string }>;
   try {
-    body = JSON.parse(bodyText);
-  } catch {
+    const auth = await authenticateRequest(request);
+    if (!auth) {
+      return Response.json(
+        { error: "Unauthorized. Provide a valid Supabase access token as Bearer token." },
+        { status: 401 }
+      );
+    }
+
+    // Read the body upfront (can only be read once)
+    const bodyText = await request.text();
+    let body: { method?: string } | Array<{ method?: string }>;
+    try {
+      body = JSON.parse(bodyText);
+    } catch {
+      return Response.json(
+        { jsonrpc: "2.0", error: { code: -32700, message: "Parse error: Invalid JSON" }, id: null },
+        { status: 400 }
+      );
+    }
+
+    const method = Array.isArray(body) ? body[0]?.method : body.method;
+
+    // Create a fresh server + transport per request (stateless)
+    const server = createMcpServer(auth.supabase, auth.userId);
+    const transport = new WebStandardStreamableHTTPServerTransport({
+      sessionIdGenerator: () => "stateless",
+    });
+    await server.connect(transport);
+
+    if (method !== "initialize") {
+      // Auto-initialize so tool calls work on cold starts
+      const initRes = await transport.handleRequest(
+        new Request(request.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json, text/event-stream" },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: "_init",
+            method: "initialize",
+            params: {
+              protocolVersion: "2025-03-26",
+              capabilities: {},
+              clientInfo: { name: "serverless-auto-init", version: "1.0.0" },
+            },
+          }),
+        })
+      );
+      // Drain the init SSE response so the transport finishes processing it
+      if (initRes.body) {
+        const reader = initRes.body.getReader();
+        while (!(await reader.read()).done) { /* drain */ }
+      }
+
+      // Send initialized notification
+      const notifRes = await transport.handleRequest(
+        new Request(request.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json, text/event-stream" },
+          body: JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }),
+        })
+      );
+      if (notifRes.body) {
+        const reader = notifRes.body.getReader();
+        while (!(await reader.read()).done) { /* drain */ }
+      }
+    }
+
+    // Handle the actual request
+    return transport.handleRequest(
+      new Request(request.url, {
+        method: "POST",
+        headers: request.headers,
+        body: bodyText,
+      })
+    );
+  } catch (err: unknown) {
+    console.error("MCP POST error:", err);
     return Response.json(
-      { jsonrpc: "2.0", error: { code: -32700, message: "Parse error: Invalid JSON" }, id: null },
-      { status: 400 }
+      { jsonrpc: "2.0", error: { code: -32603, message: String(err) }, id: null },
+      { status: 500 }
     );
   }
-
-  const method = Array.isArray(body) ? body[0]?.method : body.method;
-
-  if (method !== "initialize") {
-    // Auto-initialize for serverless cold starts
-    const initReq = new Request(request.url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json, text/event-stream",
-      },
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: "__auto_init__",
-        method: "initialize",
-        params: {
-          protocolVersion: "2025-03-26",
-          capabilities: {},
-          clientInfo: { name: "serverless-auto-init", version: "1.0.0" },
-        },
-      }),
-    });
-    await transport.handleRequest(initReq);
-
-    // Send initialized notification to complete the handshake
-    const notifReq = new Request(request.url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json, text/event-stream",
-      },
-      body: JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }),
-    });
-    await transport.handleRequest(notifReq);
-  }
-
-  // Handle the actual request with the original body
-  const actualReq = new Request(request.url, {
-    method: "POST",
-    headers: request.headers,
-    body: bodyText,
-  });
-  return transport.handleRequest(actualReq);
 }
 
 // ─── GET: SSE not supported in stateless serverless mode ────────────────
