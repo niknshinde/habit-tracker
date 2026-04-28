@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Checkbox } from '@/components/ui/checkbox';
+import TaskItem from '@/components/task-item';
 import {
   Clock,
   Play,
@@ -25,6 +25,7 @@ import Celebration from '@/components/celebration';
 interface Task {
   id: string;
   title: string;
+  description?: string | null;
   status: string;
   task_type: string;
   youtube_url?: string;
@@ -495,51 +496,11 @@ export default function DashboardPage() {
             ) : (
               <div className="space-y-2">
                 {tasks.map((task) => (
-                  <div
+                  <TaskItem
                     key={task.id}
-                    className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${
-                      task.status === 'completed'
-                        ? 'bg-green-50/60 border-green-200'
-                        : 'bg-white border-gray-200 hover:border-orange-200'
-                    }`}
-                  >
-                    <Checkbox
-                      checked={task.status === 'completed'}
-                      onCheckedChange={() => toggleTask(task)}
-                      className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 border-gray-400"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p
-                        className={`text-[13.5px] font-medium ${
-                          task.status === 'completed'
-                            ? 'line-through text-gray-400'
-                            : 'text-gray-800'
-                        }`}
-                      >
-                        {task.title}
-                      </p>
-                      {task.youtube_title && (
-                        <p className="text-xs text-gray-400 truncate">
-                          📹 {task.youtube_title}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className={`text-xs ${taskTypeColors[task.task_type] || ''}`}>
-                        {task.task_type}
-                      </Badge>
-                      {task.youtube_url && (
-                        <a
-                          href={task.youtube_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-red-500 hover:text-red-700"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
+                    task={task}
+                    onToggle={() => toggleTask(task)}
+                  />
                 ))}
               </div>
             )}

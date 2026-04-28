@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import Celebration from '@/components/celebration';
+import TaskItem from '@/components/task-item';
 
 interface Task {
   id: string;
@@ -673,46 +674,21 @@ export default function GoalsPage() {
                           </p>
                           <div className="space-y-1.5">
                             {goal.tasks.map((task) => (
-                              <div
+                              <TaskItem
                                 key={task.id}
-                                className={`flex items-center gap-2.5 p-2.5 rounded-lg border transition-colors ${
-                                  task.status === 'completed'
-                                    ? 'bg-green-50/60 border-green-200'
-                                    : 'bg-white border-gray-200 hover:border-orange-200'
-                                }`}
-                              >
-                                <Checkbox
-                                  checked={task.status === 'completed'}
-                                  onCheckedChange={() => toggleTaskStatus(task.id, task.status, goal.id)}
-                                  className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 border-gray-400"
-                                />
-                                <span
-                                  className={`flex-1 text-[13.5px] font-medium ${
-                                    task.status === 'completed'
-                                      ? 'line-through text-gray-400'
-                                      : 'text-gray-800'
-                                  }`}
-                                >
-                                  {task.title}
-                                </span>
-                                <Badge variant="secondary" className={`text-[11px] font-medium ${
-                                  task.task_type === 'study' ? 'bg-blue-100 text-blue-700 border-blue-200' :
-                                  task.task_type === 'video' ? 'bg-red-100 text-red-700 border-red-200' :
-                                  task.task_type === 'revision' ? 'bg-green-100 text-green-700 border-green-200' :
-                                  task.task_type === 'practice' ? 'bg-amber-100 text-amber-700 border-amber-200' :
-                                  'bg-gray-100 text-gray-700 border-gray-200'
-                                }`}>
-                                  {task.task_type}
-                                </Badge>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-6 w-6 text-gray-400 hover:text-red-500"
-                                  onClick={() => deleteTask(task.id)}
-                                >
-                                  <Trash2 className="w-3 h-3" />
-                                </Button>
-                              </div>
+                                task={task}
+                                showCheckbox={false}
+                                rightContent={
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-6 w-6 text-gray-400 hover:text-red-500"
+                                    onClick={() => deleteTask(task.id)}
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                  </Button>
+                                }
+                              />
                             ))}
                           </div>
                         </div>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ExternalLink, BookOpen, Video, RotateCcw, PenLine, MoreHorizontal } from 'lucide-react';
+import { ExternalLink, BookOpen, Video, RotateCcw, PenLine, MoreHorizontal, ChevronDown, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Task {
@@ -39,6 +39,7 @@ const taskTypeColors: Record<string, string> = {
 export default function TodayTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedTasks, setExpandedTasks] = useState<Set<string>>(new Set());
 
   const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -72,6 +73,15 @@ export default function TodayTasks() {
     } catch (err) {
       console.error('Failed to update task:', err);
     }
+  };
+
+  const toggleExpand = (taskId: string) => {
+    setExpandedTasks(prev => {
+      const next = new Set(prev);
+      if (next.has(taskId)) next.delete(taskId);
+      else next.add(taskId);
+      return next;
+    });
   };
 
   if (loading) {
@@ -108,44 +118,78 @@ export default function TodayTasks() {
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${
+                className={`rounded-lg border transition-colors ${
                   task.status === 'completed'
                     ? 'bg-green-50/50 border-green-100'
                     : 'bg-white border-gray-100 hover:border-gray-200'
                 }`}
               >
-                <Checkbox
-                  checked={task.status === 'completed'}
-                  onCheckedChange={() => toggleTask(task)}
-                  className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
-                />
-                <div className="flex-1 min-w-0">
-                  <p className={`text-sm font-medium truncate ${
-                    task.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-900'
-                  }`}>
-                    {task.title}
-                  </p>
-                  {task.youtube_title && (
-                    <p className="text-xs text-purple-500 truncate mt-0.5">
-                      🎥 {task.youtube_title}
-                    </p>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <Badge variant="secondary" className={`text-xs ${taskTypeColors[task.task_type] || ''}`}>
-                    {taskTypeIcons[task.task_type]}
-                  </Badge>
-                  {task.youtube_url && (
-                    <a
-                      href={task.youtube_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-purple-500 hover:text-purple-700 p-1"
+                <div className="flex items-center gap-3 p-3">
+                  <Checkbox
+                    checked={task.status === 'completed'}
+                    onCheckedChange={() => toggleTask(task)}
+                    className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                  />
+                  {task.description && (
+                    <button
+                      onClick={() => toggleExpand(task.id)}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
                     >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
+                      {expandedTasks.has(task.id) ? (
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      ) : (
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      )}
+                    </button>
                   )}
+                  <div
+                    className="flex-1 min-w-0 cursor-pointer"
+                    onClick={() => task.description && toggleExpand(task.id)}
+                  >
+                    <p className={`text-sm font-medium truncate ${
+                      task.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-900'
+                    }`}>
+                      {task.title}
+                    </p>
+                    {task.youtube_title && (
+                      <p className="text-xs text-purple-500 truncate mt-0.5">
+                        🎥 {task.youtube_title}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <Badge variant="secondary" className={`text-xs ${taskTypeColors[task.task_type] || ''}`}>
+                      {taskTypeIcons[task.task_type]}
+                    </Badge>
+                    {task.youtube_url && (
+                      <a
+                        href={task.youtube_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple-500 hover:text-purple-700 p-1"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
                 </div>
+                {expandedTasks.has(task.id) && task.description && (
+                  <div className="px-3 pb-3 pl-10">
+                    <div className="text-xs text-gray-500 leading-relaxed space-y-1">
+                      {(() => {
+                        const parts = task.description.split(/\s+(?=Q\d+[\.\:]\s)/).map(s => s.trim()).filter(Boolean);
+                        if (parts.length > 1) {
+                          return parts.map((item, i) => (
+                            <p key={i} className="py-1.5 px-2.5 bg-gray-50 rounded text-[11.5px] leading-relaxed">
+                              {item}
+                            </p>
+                          ));
+                        }
+                        return <p className="whitespace-pre-wrap">{task.description}</p>;
+                      })()}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>

@@ -23,12 +23,14 @@ import {
   Clock,
   CheckCircle2,
 } from 'lucide-react';
+import TaskItem from '@/components/task-item';
 
 interface DayData {
   date: string;
   tasks: {
     id: string;
     title: string;
+    description?: string;
     status: string;
     task_type: string;
   }[];
@@ -65,6 +67,7 @@ export default function CalendarPage() {
           map[task.date].tasks.push({
             id: task.id,
             title: task.title,
+            description: task.description || undefined,
             status: task.status,
             task_type: task.task_type,
           });
@@ -250,26 +253,12 @@ export default function CalendarPage() {
                     </p>
                     <div className="space-y-1.5">
                       {selectedDayData.tasks.map((task) => (
-                        <div
+                        <TaskItem
                           key={task.id}
-                          className={`flex items-center gap-2 p-2 rounded-lg text-sm ${
-                            task.status === 'completed'
-                              ? 'bg-green-50 text-green-700'
-                              : 'bg-gray-50 text-gray-700'
-                          }`}
-                        >
-                          {task.status === 'completed' ? (
-                            <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                          ) : (
-                            <div className="w-4 h-4 border-2 border-gray-300 rounded-full shrink-0" />
-                          )}
-                          <span className={task.status === 'completed' ? 'line-through' : ''}>
-                            {task.title}
-                          </span>
-                          <Badge variant="secondary" className="text-xs ml-auto shrink-0">
-                            {task.task_type}
-                          </Badge>
-                        </div>
+                          task={task}
+                          showCheckbox={false}
+                          showStatusDot={true}
+                        />
                       ))}
                     </div>
                   </div>
