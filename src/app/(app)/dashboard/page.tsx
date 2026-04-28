@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { formatHours } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -555,7 +556,7 @@ export default function DashboardPage() {
           <CardContent>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-[22px] font-semibold text-orange-600 tracking-tight">{analytics.totalHours}h</p>
+                <p className="text-[22px] font-semibold text-orange-600 tracking-tight">{formatHours(analytics.totalHours)}</p>
                 <p className="text-[11.5px] text-gray-400 font-medium mt-0.5">Total Study</p>
               </div>
               <div>

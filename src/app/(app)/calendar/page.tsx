@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { formatTime } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -234,9 +235,7 @@ export default function CalendarPage() {
                   <div className="flex items-center gap-2 p-3 bg-orange-50 rounded-lg">
                     <Clock className="w-4 h-4 text-orange-600" />
                     <span className="text-sm font-medium text-orange-700">
-                      {selectedDayData.studyMinutes >= 60
-                        ? `${(selectedDayData.studyMinutes / 60).toFixed(1)} hours`
-                        : `${selectedDayData.studyMinutes} minutes`}{' '}
+                      {formatTime(selectedDayData.studyMinutes)}{' '}
                       studied
                     </span>
                   </div>

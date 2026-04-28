@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Clock, CheckCircle2, Target, Flame } from 'lucide-react';
+import { formatTime } from '@/lib/utils';
 
 interface Stats {
   todayMinutes: number;
@@ -51,10 +52,8 @@ export default function QuickStats() {
 
   const items = [
     {
-      label: 'Today',
-      value: stats.todayMinutes >= 60
-        ? `${(stats.todayMinutes / 60).toFixed(1)}h`
-        : `${stats.todayMinutes}m`,
+      label: 'Today\'s Study',
+      value: formatTime(stats.todayMinutes),
       icon: Clock,
       color: 'text-orange-600',
       bg: 'bg-orange-50',

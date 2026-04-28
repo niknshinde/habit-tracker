@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { formatHours } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -309,7 +310,7 @@ export default function AnalyticsPage() {
                 onToggle={() => setOpenTip(openTip === 'total' ? null : 'total')}
               />
             </span>
-            <p className="text-[22px] font-bold text-gray-900 tracking-tight mt-1">{data.totalHours}h</p>
+            <p className="text-[22px] font-bold text-gray-900 tracking-tight mt-1">{formatHours(data.totalHours)}</p>
           </CardContent>
         </Card>
         <Card className="border-gray-200">
