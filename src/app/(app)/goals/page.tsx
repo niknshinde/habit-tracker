@@ -281,9 +281,9 @@ export default function GoalsPage() {
   };
 
   const statusColors: Record<string, string> = {
-    pending: 'bg-gray-100 text-gray-600',
-    'in-progress': 'bg-orange-100 text-orange-700',
-    completed: 'bg-green-100 text-green-700',
+    pending: 'bg-[#948979]/15 text-[#948979]',
+    'in-progress': 'bg-[#DFD0B8]/15 text-[#DFD0B8]',
+    completed: 'bg-emerald-400/15 text-emerald-400',
   };
 
   const getGoalProgress = (goal: Goal) => {
@@ -296,7 +296,7 @@ export default function GoalsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin w-8 h-8 border-4 border-orange-200 border-t-orange-600 rounded-full" />
+        <div className="animate-spin w-8 h-8 border-4 border-[#948979]/30 border-t-[#DFD0B8] rounded-full" />
       </div>
     );
   }
@@ -306,13 +306,13 @@ export default function GoalsPage() {
       {/* Header */}
       <div className="space-y-3">
         <div>
-          <h1 className="text-[22px] font-semibold text-gray-900 tracking-tight">Goals</h1>
-          <p className="text-[13px] text-gray-400 mt-1 font-medium">Manage your study goals and tasks</p>
+          <h1 className="text-[22px] font-semibold text-[#F0E6D3] tracking-tight">Goals</h1>
+          <p className="text-[13px] text-[#948979] mt-1 font-medium">Manage your study goals and tasks</p>
         </div>
         <div className="flex gap-2">
           <Dialog open={showTaskDialog} onOpenChange={setShowTaskDialog}>
             <DialogTrigger
-              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-[13px] font-medium rounded-md border border-orange-200 text-orange-700 hover:bg-orange-50 h-9 px-3 cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-[13px] font-medium rounded-md border border-[#DFD0B8]/30 text-[#DFD0B8] hover:bg-[#DFD0B8]/10 h-9 px-3 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               Add Task
@@ -402,7 +402,7 @@ export default function GoalsPage() {
                 </div>
                 <Button
                   onClick={createTask}
-                  className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+                  className="w-full bg-[#DFD0B8] hover:bg-[#C4B8A2] text-[#222831]"
                   disabled={!taskForm.title || !taskForm.date}
                 >
                   Add Task
@@ -422,7 +422,7 @@ export default function GoalsPage() {
             }}
           >
             <DialogTrigger
-              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-[13px] font-medium rounded-md bg-orange-600 hover:bg-orange-700 text-white h-9 px-3 cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-[13px] font-medium rounded-md bg-[#DFD0B8] hover:bg-[#C4B8A2] text-[#222831] h-9 px-3 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               New Goal
@@ -513,7 +513,7 @@ export default function GoalsPage() {
                 </div>
                 <Button
                   onClick={editingGoal ? updateGoal : createGoal}
-                  className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+                  className="w-full bg-[#DFD0B8] hover:bg-[#C4B8A2] text-[#222831]"
                   disabled={!goalForm.title || !goalForm.start_date || !goalForm.end_date}
                 >
                   {editingGoal ? 'Update Goal' : 'Create Goal'}
@@ -532,7 +532,7 @@ export default function GoalsPage() {
             variant={filter === f ? 'default' : 'outline'}
             size="sm"
             onClick={() => setFilter(f as typeof filter)}
-            className={filter === f ? 'bg-orange-600 hover:bg-orange-700' : ''}
+            className={filter === f ? 'bg-[#DFD0B8] hover:bg-[#C4B8A2] text-[#222831]' : ''}
           >
             {f === 'all' ? 'All Goals' : f === 'monthly' ? 'Monthly' : 'Weekly'}
           </Button>
@@ -543,7 +543,7 @@ export default function GoalsPage() {
       <div className="space-y-4">
         {filteredGoals.length === 0 ? (
             <Card>
-              <CardContent className="py-12 text-center text-gray-400">
+              <CardContent className="py-12 text-center text-[#948979]">
                 <Target className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p className="text-[15px] font-medium">No goals yet</p>
                 <p className="text-sm mt-1">Click &ldquo;New Goal&rdquo; to create your first goal.</p>
@@ -556,12 +556,12 @@ export default function GoalsPage() {
               const childGoals = weeklyGoals.filter((g) => g.parent_id === goal.id);
 
               return (
-                <Card key={goal.id} className="overflow-hidden border-gray-200 shadow-sm">
+                <Card key={goal.id} className="overflow-hidden border-[#948979]/15 shadow-sm">
                   <CardHeader className="pb-3 px-3 md:px-6">
                     <div className="flex items-start gap-2">
                       <button
                         onClick={() => toggleExpand(goal.id)}
-                        className="mt-1 text-gray-400 hover:text-gray-600 shrink-0"
+                        className="mt-1 text-[#948979] hover:text-[#DFD0B8] shrink-0"
                       >
                         {isExpanded ? (
                           <ChevronDown className="w-5 h-5" />
@@ -584,7 +584,7 @@ export default function GoalsPage() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-7 w-7 text-gray-400 hover:text-blue-600"
+                              className="h-7 w-7 text-[#948979] hover:text-sky-400"
                               onClick={() => startEditGoal(goal)}
                             >
                               <Edit className="w-3.5 h-3.5" />
@@ -592,23 +592,23 @@ export default function GoalsPage() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-7 w-7 text-gray-400 hover:text-red-600"
+                              className="h-7 w-7 text-[#948979] hover:text-rose-400"
                               onClick={() => deleteGoal(goal.id)}
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </Button>
                           </div>
                         </div>
-                        <p className="text-[11.5px] text-gray-400 mt-1.5 flex items-center gap-1">
+                        <p className="text-[11.5px] text-[#948979] mt-1.5 flex items-center gap-1">
                           <Calendar className="w-3 h-3 shrink-0" />
                           {format(new Date(goal.start_date + 'T00:00:00'), 'MMM d')} → {format(new Date(goal.end_date + 'T00:00:00'), 'MMM d, yyyy')}
                         </p>
                         {goal.description && (
-                          <p className="text-[12.5px] text-gray-400 mt-1 line-clamp-2">{goal.description}</p>
+                          <p className="text-[12.5px] text-[#948979] mt-1 line-clamp-2">{goal.description}</p>
                         )}
                         <div className="flex items-center gap-2 mt-2">
                           <Progress value={progress} className="h-1.5 flex-1" />
-                          <span className="text-[11px] text-gray-400 font-medium">{progress}%</span>
+                          <span className="text-[11px] text-[#948979] font-medium">{progress}%</span>
                         </div>
                         <div className="mt-2">
                           <Select
@@ -633,29 +633,29 @@ export default function GoalsPage() {
                     <CardContent className="pt-0 px-3 md:px-6 space-y-4">
                       {/* Remarks */}
                       {goal.remarks && (
-                        <div className="bg-orange-50/50 p-3 rounded-lg">
-                          <p className="text-xs font-medium text-orange-700 flex items-center gap-1 mb-1">
+                        <div className="bg-[#DFD0B8]/8 p-3 rounded-lg">
+                          <p className="text-xs font-medium text-[#DFD0B8] flex items-center gap-1 mb-1">
                             <MessageSquare className="w-3 h-3" /> Remarks
                           </p>
-                          <p className="text-sm text-gray-600">{goal.remarks}</p>
+                          <p className="text-sm text-[#948979]">{goal.remarks}</p>
                         </div>
                       )}
 
                       {/* Sub-goals (weekly under monthly) */}
                       {childGoals.length > 0 && (
                         <div>
-                          <p className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+                          <p className="text-xs font-medium text-[#948979] mb-2 uppercase tracking-wider">
                             Weekly Sub-Goals
                           </p>
-                          <div className="space-y-2 pl-4 border-l-2 border-orange-100">
+                          <div className="space-y-2 pl-4 border-l-2 border-[#DFD0B8]/20">
                             {childGoals.map((child) => (
                               <div
                                 key={child.id}
-                                className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
+                                className="flex items-center justify-between p-2 bg-[#393E46] rounded-lg"
                               >
                                 <div>
-                                  <p className="text-sm font-medium text-gray-800">{child.title}</p>
-                                  <p className="text-xs text-gray-400">
+                                  <p className="text-sm font-medium text-[#F0E6D3]">{child.title}</p>
+                                  <p className="text-xs text-[#948979]">
                                     {child.start_date} → {child.end_date}
                                   </p>
                                 </div>
@@ -669,7 +669,7 @@ export default function GoalsPage() {
                       {/* Tasks */}
                       {goal.tasks && goal.tasks.length > 0 && (
                         <div>
-                          <p className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+                          <p className="text-xs font-medium text-[#948979] mb-2 uppercase tracking-wider">
                             Tasks ({goal.tasks.filter((t) => t.status === 'completed').length}/{goal.tasks.length})
                           </p>
                           <div className="space-y-1.5">
@@ -682,7 +682,7 @@ export default function GoalsPage() {
                                   <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="h-6 w-6 text-gray-400 hover:text-red-500"
+                                    className="h-6 w-6 text-[#948979] hover:text-rose-400"
                                     onClick={() => deleteTask(task.id)}
                                   >
                                     <Trash2 className="w-3 h-3" />
@@ -698,7 +698,7 @@ export default function GoalsPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-orange-600 hover:text-orange-700 hover:bg-orange-50"
+                        className="text-[#DFD0B8] hover:text-[#C4B8A2] hover:bg-[#DFD0B8]/10"
                         onClick={() => {
                           setSelectedGoalForTask(goal.id);
                           setShowTaskDialog(true);

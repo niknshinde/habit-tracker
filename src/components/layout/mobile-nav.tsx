@@ -25,7 +25,7 @@ export default function MobileNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-50">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1C2028] border-t border-[#948979]/15 z-50">
       <div className="flex items-center justify-around py-2 px-1">
         {navItems.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
@@ -36,11 +36,11 @@ export default function MobileNav() {
               className={cn(
                 'flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg text-xs transition-colors min-w-0',
                 isActive
-                  ? 'text-orange-600'
-                  : 'text-gray-400 hover:text-gray-600'
+                  ? 'text-[#DFD0B8]'
+                  : 'text-[#948979] hover:text-[#DFD0B8]/70'
               )}
             >
-              <item.icon className={cn('w-5 h-5', isActive && 'text-orange-600')} />
+              <item.icon className={cn('w-5 h-5', isActive && 'text-[#DFD0B8]')} />
               <span className="truncate">{item.label}</span>
             </Link>
           );

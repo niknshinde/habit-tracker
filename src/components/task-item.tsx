@@ -33,11 +33,11 @@ const taskTypeIcons: Record<string, React.ReactNode> = {
 };
 
 const taskTypeBadgeColors: Record<string, string> = {
-  study: 'bg-blue-100 text-blue-700 border-blue-200',
-  video: 'bg-red-100 text-red-700 border-red-200',
-  revision: 'bg-green-100 text-green-700 border-green-200',
-  practice: 'bg-amber-100 text-amber-700 border-amber-200',
-  other: 'bg-gray-100 text-gray-700 border-gray-200',
+  study: 'bg-sky-400/10 text-sky-400 border-sky-400/20',
+  video: 'bg-rose-400/10 text-rose-400 border-rose-400/20',
+  revision: 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20',
+  practice: 'bg-amber-400/10 text-amber-400 border-amber-400/20',
+  other: 'bg-[#948979]/10 text-[#948979] border-[#948979]/20',
 };
 
 function formatDescription(description: string) {
@@ -46,7 +46,7 @@ function formatDescription(description: string) {
     return (
       <div className="space-y-1">
         {parts.map((item, i) => (
-          <p key={i} className="py-1.5 px-2.5 bg-gray-50 rounded text-[11.5px] leading-relaxed">
+          <p key={i} className="py-1.5 px-2.5 bg-[#393E46] rounded text-[11.5px] leading-relaxed">
             {item}
           </p>
         ))}
@@ -65,8 +65,8 @@ export default function TaskItem({ task, onToggle, showCheckbox = true, showStat
     <div
       className={`rounded-lg border transition-colors ${
         isCompleted
-          ? 'bg-green-50/60 border-green-200'
-          : 'bg-white border-gray-200 hover:border-orange-200'
+          ? 'bg-emerald-400/5 border-emerald-400/20'
+          : 'bg-[#2D333B] border-[#948979]/15 hover:border-[#DFD0B8]/30'
       } ${className || ''}`}
     >
       <div className="flex items-center gap-2.5 p-2.5">
@@ -74,19 +74,19 @@ export default function TaskItem({ task, onToggle, showCheckbox = true, showStat
           <Checkbox
             checked={isCompleted}
             onCheckedChange={onToggle}
-            className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 border-gray-400"
+            className="data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500 border-[#948979]/40"
           />
         )}
         {showStatusDot && (
           <div className={`w-4 h-4 rounded-full shrink-0 border-2 ${
-            isCompleted ? 'bg-green-500 border-green-500' : 'border-gray-300'
+            isCompleted ? 'bg-emerald-500 border-emerald-500' : 'border-[#948979]/40'
           }`} />
         )}
 
         {hasDescription && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-gray-400 hover:text-gray-600 transition-colors shrink-0"
+            className="text-[#948979] hover:text-[#DFD0B8] transition-colors shrink-0"
           >
             {expanded ? (
               <ChevronDown className="w-3.5 h-3.5" />
@@ -101,7 +101,7 @@ export default function TaskItem({ task, onToggle, showCheckbox = true, showStat
           onClick={() => hasDescription && setExpanded(!expanded)}
         >
           <p className={`text-[13.5px] font-medium ${
-            isCompleted ? 'line-through text-gray-400' : 'text-gray-800'
+            isCompleted ? 'line-through text-[#948979]/60' : 'text-[#F0E6D3]'
           }`}>
             {taskTypeIcons[task.task_type] && (
               <span className="inline-flex align-middle mr-1.5">{taskTypeIcons[task.task_type]}</span>
@@ -109,7 +109,7 @@ export default function TaskItem({ task, onToggle, showCheckbox = true, showStat
             {task.title}
           </p>
           {task.youtube_title && (
-            <p className="text-xs text-gray-400 truncate mt-0.5">
+            <p className="text-xs text-[#948979] truncate mt-0.5">
               📹 {task.youtube_title}
             </p>
           )}
@@ -124,7 +124,7 @@ export default function TaskItem({ task, onToggle, showCheckbox = true, showStat
               href={task.youtube_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-red-500 hover:text-red-700"
+              className="text-rose-400 hover:text-rose-300"
             >
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
@@ -135,7 +135,7 @@ export default function TaskItem({ task, onToggle, showCheckbox = true, showStat
 
       {expanded && task.description && (
         <div className="px-3 pb-3 pl-11">
-          <div className="text-xs text-gray-500 leading-relaxed">
+          <div className="text-xs text-[#948979] leading-relaxed">
             {formatDescription(task.description)}
           </div>
         </div>

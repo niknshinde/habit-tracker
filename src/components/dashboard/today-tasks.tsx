@@ -29,11 +29,11 @@ const taskTypeIcons: Record<string, React.ReactNode> = {
 };
 
 const taskTypeColors: Record<string, string> = {
-  study: 'bg-blue-50 text-blue-700',
-  video: 'bg-purple-50 text-purple-700',
-  revision: 'bg-green-50 text-green-700',
-  practice: 'bg-amber-50 text-amber-700',
-  other: 'bg-gray-50 text-gray-700',
+  study: 'bg-sky-400/10 text-sky-400',
+  video: 'bg-purple-400/10 text-purple-400',
+  revision: 'bg-emerald-400/10 text-emerald-400',
+  practice: 'bg-amber-400/10 text-amber-400',
+  other: 'bg-[#948979]/10 text-[#948979]',
 };
 
 export default function TodayTasks() {
@@ -89,9 +89,9 @@ export default function TodayTasks() {
       <Card>
         <CardContent className="p-6">
           <div className="animate-pulse space-y-3">
-            <div className="h-4 bg-gray-100 rounded w-1/3" />
-            <div className="h-10 bg-gray-50 rounded" />
-            <div className="h-10 bg-gray-50 rounded" />
+            <div className="h-4 bg-[#393E46] rounded w-1/3" />
+            <div className="h-10 bg-[#393E46]/60 rounded" />
+            <div className="h-10 bg-[#393E46]/60 rounded" />
           </div>
         </CardContent>
       </Card>
@@ -102,7 +102,7 @@ export default function TodayTasks() {
     <Card>
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-gray-900">Today&apos;s Tasks</h3>
+          <h3 className="font-semibold text-[#F0E6D3]">Today&apos;s Tasks</h3>
           <Badge variant="secondary" className="text-xs">
             {tasks.filter(t => t.status === 'completed').length}/{tasks.length}
           </Badge>
@@ -110,8 +110,8 @@ export default function TodayTasks() {
 
         {tasks.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-gray-400 text-sm">No tasks for today</p>
-            <p className="text-gray-300 text-xs mt-1">Add tasks from the Goals page</p>
+            <p className="text-[#948979] text-sm">No tasks for today</p>
+            <p className="text-[#948979]/50 text-xs mt-1">Add tasks from the Goals page</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -120,20 +120,20 @@ export default function TodayTasks() {
                 key={task.id}
                 className={`rounded-lg border transition-colors ${
                   task.status === 'completed'
-                    ? 'bg-green-50/50 border-green-100'
-                    : 'bg-white border-gray-100 hover:border-gray-200'
+                    ? 'bg-emerald-400/5 border-emerald-400/20'
+                    : 'bg-[#2D333B] border-[#948979]/15 hover:border-[#948979]/30'
                 }`}
               >
                 <div className="flex items-center gap-3 p-3">
                   <Checkbox
                     checked={task.status === 'completed'}
                     onCheckedChange={() => toggleTask(task)}
-                    className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                    className="data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
                   />
                   {task.description && (
                     <button
                       onClick={() => toggleExpand(task.id)}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                      className="text-[#948979] hover:text-[#DFD0B8] transition-colors"
                     >
                       {expandedTasks.has(task.id) ? (
                         <ChevronDown className="w-3.5 h-3.5" />
@@ -147,12 +147,12 @@ export default function TodayTasks() {
                     onClick={() => task.description && toggleExpand(task.id)}
                   >
                     <p className={`text-sm font-medium truncate ${
-                      task.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-900'
+                      task.status === 'completed' ? 'line-through text-[#948979]/60' : 'text-[#F0E6D3]'
                     }`}>
                       {task.title}
                     </p>
                     {task.youtube_title && (
-                      <p className="text-xs text-purple-500 truncate mt-0.5">
+                      <p className="text-xs text-purple-400 truncate mt-0.5">
                         🎥 {task.youtube_title}
                       </p>
                     )}
@@ -166,7 +166,7 @@ export default function TodayTasks() {
                         href={task.youtube_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-purple-500 hover:text-purple-700 p-1"
+                        className="text-purple-400 hover:text-purple-300 p-1"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
@@ -175,12 +175,12 @@ export default function TodayTasks() {
                 </div>
                 {expandedTasks.has(task.id) && task.description && (
                   <div className="px-3 pb-3 pl-10">
-                    <div className="text-xs text-gray-500 leading-relaxed space-y-1">
+                    <div className="text-xs text-[#948979] leading-relaxed space-y-1">
                       {(() => {
                         const parts = task.description.split(/\s+(?=Q\d+[\.\:]\s)/).map(s => s.trim()).filter(Boolean);
                         if (parts.length > 1) {
                           return parts.map((item, i) => (
-                            <p key={i} className="py-1.5 px-2.5 bg-gray-50 rounded text-[11.5px] leading-relaxed">
+                            <p key={i} className="py-1.5 px-2.5 bg-[#393E46] rounded text-[11.5px] leading-relaxed">
                               {item}
                             </p>
                           ));

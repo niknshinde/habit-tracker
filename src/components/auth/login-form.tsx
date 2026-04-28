@@ -45,23 +45,23 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-red-50 p-4">
-      <Card className="w-full max-w-md shadow-lg border-orange-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#222831] via-[#2D333B] to-[#222831] p-4">
+      <Card className="w-full max-w-md shadow-2xl border-[#948979]/20 bg-[#2D333B]">
         <CardHeader className="text-center space-y-2">
-          <div className="mx-auto w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-2">
-            <BookOpen className="w-8 h-8 text-orange-600" />
+          <div className="mx-auto w-16 h-16 bg-[#DFD0B8]/10 rounded-full flex items-center justify-center mb-2">
+            <BookOpen className="w-8 h-8 text-[#DFD0B8]" />
           </div>
-          <CardTitle className="text-[22px] font-semibold text-gray-900 tracking-tight">UPSC Study Tracker</CardTitle>
-          <CardDescription className="text-gray-400 text-[13.5px] font-normal tracking-[-0.01em]">
+          <CardTitle className="text-[22px] font-semibold text-[#F0E6D3] tracking-tight">UPSC Study Tracker</CardTitle>
+          <CardDescription className="text-[#948979] text-[13.5px] font-normal tracking-[-0.01em]">
             {mode === 'login' ? 'Sign in to your account' : 'Create a new account'}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-gray-600 text-[13px] font-medium">Email</Label>
+              <Label htmlFor="email" className="text-[#948979] text-[13px] font-medium">Email</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#948979]" />
                 <Input
                   id="email"
                   type="email"
@@ -75,9 +75,9 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-gray-600 text-[13px] font-medium">Password</Label>
+              <Label htmlFor="password" className="text-[#948979] text-[13px] font-medium">Password</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#948979]" />
                 <Input
                   id="password"
                   type="password"
@@ -90,11 +90,11 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
               </div>
             </div>
             {error && (
-              <p className="text-[13px] text-red-600 bg-red-50 px-3 py-2 rounded-lg font-medium">{error}</p>
+              <p className="text-[13px] text-rose-400 bg-rose-400/10 px-3 py-2 rounded-lg font-medium">{error}</p>
             )}
             <Button
               type="submit"
-              className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+              className="w-full bg-[#DFD0B8] hover:bg-[#C4B8A2] text-[#222831]"
               disabled={loading || !email || !password}
             >
               {loading ? (
@@ -111,7 +111,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
             <button
               type="button"
               onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setError(''); }}
-              className="text-[13px] text-orange-600 hover:text-orange-700 font-medium"
+              className="text-[13px] text-[#DFD0B8] hover:text-[#F0E6D3] font-medium"
             >
               {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
             </button>

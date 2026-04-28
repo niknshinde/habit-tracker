@@ -24,7 +24,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   if (!ready) return null;
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50/50">
+    <div className="flex h-screen overflow-hidden bg-[#222831]">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header onLogout={() => router.replace('/')} />

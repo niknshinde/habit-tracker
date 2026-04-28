@@ -229,16 +229,16 @@ export default function StudyTimer() {
   const isRunning = timerState !== null && timerState.lastResumedAt !== null;
 
   return (
-    <Card className={`border-2 transition-colors ${isActive ? (isPaused ? 'border-yellow-300 bg-yellow-50/50' : 'border-orange-300 bg-orange-50/50') : 'border-gray-100'}`}>
+    <Card className={`border-2 transition-colors ${isActive ? (isPaused ? 'border-amber-400/30 bg-amber-400/5' : 'border-[#DFD0B8]/30 bg-[#DFD0B8]/5') : 'border-[#948979]/15'}`}>
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isActive ? (isPaused ? 'bg-yellow-100' : 'bg-orange-100') : 'bg-gray-100'}`}>
-              <Timer className={`w-5 h-5 ${isActive ? (isPaused ? 'text-yellow-600' : 'text-orange-600') : 'text-gray-400'}`} />
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isActive ? (isPaused ? 'bg-amber-400/10' : 'bg-[#DFD0B8]/10') : 'bg-[#393E46]'}`}>
+              <Timer className={`w-5 h-5 ${isActive ? (isPaused ? 'text-amber-400' : 'text-[#DFD0B8]') : 'text-[#948979]'}`} />
             </div>
             <div>
-              <p className="text-sm text-gray-500 font-medium">Study Timer</p>
-              <p className={`text-3xl font-mono font-bold tracking-wider ${isActive ? (isPaused ? 'text-yellow-700' : 'text-orange-700') : 'text-gray-300'}`}>
+              <p className="text-sm text-[#948979] font-medium">Study Timer</p>
+              <p className={`text-3xl font-mono font-bold tracking-wider ${isActive ? (isPaused ? 'text-amber-400' : 'text-[#DFD0B8]') : 'text-[#948979]/40'}`}>
                 {formatTime(displaySeconds)}
               </p>
             </div>
@@ -251,8 +251,8 @@ export default function StudyTimer() {
                 disabled={loading}
                 className={
                   isPaused
-                    ? 'bg-green-500 hover:bg-green-600 text-white'
-                    : 'bg-yellow-500 hover:bg-yellow-600 text-white'
+                    ? 'bg-emerald-500 hover:bg-emerald-600 text-white'
+                    : 'bg-amber-500 hover:bg-amber-600 text-[#222831]'
                 }
               >
                 {isPaused ? (
@@ -274,8 +274,8 @@ export default function StudyTimer() {
               disabled={loading}
               className={
                 isActive
-                  ? 'bg-red-500 hover:bg-red-600 text-white'
-                  : 'bg-orange-600 hover:bg-orange-700 text-white'
+                  ? 'bg-rose-500 hover:bg-rose-600 text-white'
+                  : 'bg-[#DFD0B8] hover:bg-[#C4B8A2] text-[#222831]'
               }
             >
               {isActive ? (
@@ -294,13 +294,13 @@ export default function StudyTimer() {
         </div>
         {isActive && (
           <div className="mt-3">
-            <div className="h-1 bg-orange-100 rounded-full overflow-hidden">
+            <div className="h-1 bg-[#393E46] rounded-full overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-1000 ${isPaused ? 'bg-yellow-500' : 'bg-orange-500 animate-pulse'}`}
+                className={`h-full rounded-full transition-all duration-1000 ${isPaused ? 'bg-amber-400' : 'bg-[#DFD0B8] animate-pulse'}`}
                 style={{ width: `${Math.min((displaySeconds / 3600) * 100, 100)}%` }}
               />
             </div>
-            <p className={`text-xs mt-1 ${isPaused ? 'text-yellow-600' : 'text-orange-500'}`}>
+            <p className={`text-xs mt-1 ${isPaused ? 'text-amber-400' : 'text-[#DFD0B8]/70'}`}>
               {isPaused ? 'Session paused' : 'Session in progress...'}
             </p>
           </div>

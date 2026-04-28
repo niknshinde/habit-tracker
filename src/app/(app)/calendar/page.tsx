@@ -100,11 +100,11 @@ export default function CalendarPage() {
 
   const getHeatColor = (minutes: number) => {
     if (minutes === 0) return '';
-    if (minutes < 30) return 'bg-orange-50';
-    if (minutes < 60) return 'bg-orange-100';
-    if (minutes < 120) return 'bg-orange-200';
-    if (minutes < 240) return 'bg-orange-300';
-    return 'bg-orange-400';
+    if (minutes < 30) return 'bg-[#DFD0B8]/5';
+    if (minutes < 60) return 'bg-[#DFD0B8]/10';
+    if (minutes < 120) return 'bg-[#DFD0B8]/15';
+    if (minutes < 240) return 'bg-[#DFD0B8]/20';
+    return 'bg-[#DFD0B8]/30';
   };
 
   const selectedDayData = selectedDate ? dayDataMap[selectedDate] : null;
@@ -112,8 +112,8 @@ export default function CalendarPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div>
-        <h1 className="text-[22px] font-semibold text-gray-900 tracking-tight">Calendar</h1>
-        <p className="text-[13px] text-gray-400 mt-1 font-medium">View your study activity by day</p>
+        <h1 className="text-[22px] font-semibold text-[#F0E6D3] tracking-tight">Calendar</h1>
+        <p className="text-[13px] text-[#948979] mt-1 font-medium">View your study activity by day</p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
@@ -144,7 +144,7 @@ export default function CalendarPage() {
             {/* Weekday headers */}
             <div className="grid grid-cols-7 gap-1 mb-2">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
-                <div key={d} className="text-center text-xs font-medium text-gray-400 py-2">
+                <div key={d} className="text-center text-xs font-medium text-[#948979] py-2">
                   {d}
                 </div>
               ))}
@@ -171,23 +171,23 @@ export default function CalendarPage() {
                     key={dateStr}
                     onClick={() => setSelectedDate(dateStr)}
                     className={`aspect-square rounded-lg p-1 text-sm transition-all relative flex flex-col items-center justify-center gap-0.5
-                      ${isToday ? 'ring-2 ring-orange-400' : ''}
-                      ${isSelected ? 'bg-orange-600 text-white' : getHeatColor(dayData?.studyMinutes || 0)}
-                      ${!hasActivity && !isSelected ? 'text-gray-400 hover:bg-gray-50' : ''}
-                      ${hasActivity && !isSelected ? 'text-gray-900 hover:ring-1 hover:ring-orange-300' : ''}
+                      ${isToday ? 'ring-2 ring-[#DFD0B8]' : ''}
+                      ${isSelected ? 'bg-[#DFD0B8] text-[#222831]' : getHeatColor(dayData?.studyMinutes || 0)}
+                      ${!hasActivity && !isSelected ? 'text-[#948979] hover:bg-[#393E46]' : ''}
+                      ${hasActivity && !isSelected ? 'text-[#F0E6D3] hover:ring-1 hover:ring-[#DFD0B8]/50' : ''}
                     `}
                   >
                     <span className="font-medium text-xs">{format(day, 'd')}</span>
                     {hasActivity && !isSelected && (
                       <div className="flex gap-0.5">
                         {dayData.studyMinutes > 0 && (
-                          <span className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
+                          <span className="w-1.5 h-1.5 bg-[#DFD0B8] rounded-full" />
                         )}
                         {totalTasks > 0 && completedCount === totalTasks && (
-                          <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
                         )}
                         {totalTasks > 0 && completedCount < totalTasks && (
-                          <span className="w-1.5 h-1.5 bg-gray-300 rounded-full" />
+                          <span className="w-1.5 h-1.5 bg-[#948979]/50 rounded-full" />
                         )}
                       </div>
                     )}
@@ -197,15 +197,15 @@ export default function CalendarPage() {
             </div>
 
             {/* Legend */}
-            <div className="flex items-center gap-4 mt-4 text-xs text-gray-400">
+            <div className="flex items-center gap-4 mt-4 text-xs text-[#948979]">
               <div className="flex items-center gap-1">
-                <span className="w-2 h-2 bg-orange-500 rounded-full" /> Study time
+                <span className="w-2 h-2 bg-[#DFD0B8] rounded-full" /> Study time
               </div>
               <div className="flex items-center gap-1">
-                <span className="w-2 h-2 bg-green-500 rounded-full" /> All tasks done
+                <span className="w-2 h-2 bg-emerald-400 rounded-full" /> All tasks done
               </div>
               <div className="flex items-center gap-1">
-                <span className="w-2 h-2 bg-gray-300 rounded-full" /> Tasks pending
+                <span className="w-2 h-2 bg-[#948979]/50 rounded-full" /> Tasks pending
               </div>
             </div>
           </CardContent>
@@ -215,7 +215,7 @@ export default function CalendarPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
-              <CalendarDays className="w-5 h-5 text-orange-600" />
+              <CalendarDays className="w-5 h-5 text-[#DFD0B8]" />
               {selectedDate
                 ? format(new Date(selectedDate + 'T00:00:00'), 'MMM d, yyyy')
                 : 'Select a Day'}
@@ -223,21 +223,21 @@ export default function CalendarPage() {
           </CardHeader>
           <CardContent>
             {!selectedDate ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-12 text-[#948979]">
                 <CalendarDays className="w-10 h-10 mx-auto mb-2 opacity-50" />
                 <p className="text-sm">Click a day to see details</p>
               </div>
             ) : !selectedDayData ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-12 text-[#948979]">
                 <p className="text-sm">No activity on this day</p>
               </div>
             ) : (
               <div className="space-y-4">
                 {/* Study time */}
                 {selectedDayData.studyMinutes > 0 && (
-                  <div className="flex items-center gap-2 p-3 bg-orange-50 rounded-lg">
-                    <Clock className="w-4 h-4 text-orange-600" />
-                    <span className="text-sm font-medium text-orange-700">
+                  <div className="flex items-center gap-2 p-3 bg-[#DFD0B8]/10 rounded-lg">
+                    <Clock className="w-4 h-4 text-[#DFD0B8]" />
+                    <span className="text-sm font-medium text-[#DFD0B8]">
                       {formatTime(selectedDayData.studyMinutes)}{' '}
                       studied
                     </span>
@@ -247,7 +247,7 @@ export default function CalendarPage() {
                 {/* Tasks */}
                 {selectedDayData.tasks.length > 0 && (
                   <div>
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
+                    <p className="text-xs font-medium text-[#948979] uppercase tracking-wider mb-2">
                       Tasks ({selectedDayData.tasks.filter((t) => t.status === 'completed').length}/
                       {selectedDayData.tasks.length})
                     </p>

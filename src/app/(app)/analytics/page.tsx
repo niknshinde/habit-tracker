@@ -63,15 +63,15 @@ function InfoTip({ text, open, onToggle }: { text: string; open: boolean; onTogg
     <span className="relative inline-block">
       <button
         onClick={(e) => { e.stopPropagation(); onToggle(); }}
-        className="text-gray-300 hover:text-gray-500 transition-colors ml-1.5"
+        className="text-[#948979]/60 hover:text-[#948979] transition-colors ml-1.5"
       >
         <Info className="w-3.5 h-3.5" />
       </button>
       {open && (
-        <span className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-gray-800 text-white text-[11.5px] leading-relaxed rounded-lg px-3 py-2.5 shadow-xl block">
-          <span className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-gray-800 block" />
+        <span className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-[#1C2028] text-[#F0E6D3] text-[11.5px] leading-relaxed rounded-lg px-3 py-2.5 shadow-xl block">
+          <span className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-[#1C2028] block" />
           {text}
-          <button onClick={onToggle} className="absolute top-1.5 right-1.5 text-gray-400 hover:text-white">
+          <button onClick={onToggle} className="absolute top-1.5 right-1.5 text-[#948979] hover:text-[#F0E6D3]">
             <X className="w-3 h-3" />
           </button>
         </span>
@@ -92,18 +92,18 @@ function PaceIndicator({ todayMinutes, avgDailyMinutes }: { todayMinutes: number
 
   if (avgDailyMinutes === 0 && todayMinutes === 0) {
     return (
-      <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-gray-50 rounded-lg">
-        <Minus className="w-4 h-4 text-gray-400" />
-        <span className="text-[12.5px] text-gray-500">Start studying to see your pace</span>
+      <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-[#393E46] rounded-lg">
+        <Minus className="w-4 h-4 text-[#948979]" />
+        <span className="text-[12.5px] text-[#948979]">Start studying to see your pace</span>
       </div>
     );
   }
 
   if (avgDailyMinutes === 0) {
     return (
-      <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-green-50 rounded-lg">
-        <TrendingUp className="w-4 h-4 text-green-600" />
-        <span className="text-[12.5px] text-green-700 font-medium">Great start! Keep it going</span>
+      <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-emerald-400/10 rounded-lg">
+        <TrendingUp className="w-4 h-4 text-emerald-400" />
+        <span className="text-[12.5px] text-emerald-400 font-medium">Great start! Keep it going</span>
       </div>
     );
   }
@@ -113,9 +113,9 @@ function PaceIndicator({ todayMinutes, avgDailyMinutes }: { todayMinutes: number
 
   if (todayMinutes >= avgDailyMinutes) {
     return (
-      <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-green-50 rounded-lg">
-        <ArrowUpRight className="w-4 h-4 text-green-600" />
-        <span className="text-[12.5px] text-green-700 font-medium">
+      <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-emerald-400/10 rounded-lg">
+        <ArrowUpRight className="w-4 h-4 text-emerald-400" />
+        <span className="text-[12.5px] text-emerald-400 font-medium">
           {pct >= 150 ? 'Crushing it! ' : 'Ahead of pace — '}{formatMins(diff)} more than avg
         </span>
       </div>
@@ -126,9 +126,9 @@ function PaceIndicator({ todayMinutes, avgDailyMinutes }: { todayMinutes: number
 
   if (isLateNight) {
     return (
-      <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-orange-50 rounded-lg">
-        <ArrowDownRight className="w-4 h-4 text-orange-600" />
-        <span className="text-[12.5px] text-orange-700 font-medium">
+      <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-[#DFD0B8]/10 rounded-lg">
+        <ArrowDownRight className="w-4 h-4 text-[#DFD0B8]" />
+        <span className="text-[12.5px] text-[#DFD0B8] font-medium">
           {formatMins(behind)} less than avg · Rest well, try tomorrow!
         </span>
       </div>
@@ -136,9 +136,9 @@ function PaceIndicator({ todayMinutes, avgDailyMinutes }: { todayMinutes: number
   }
 
   return (
-    <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-amber-50 rounded-lg">
-      <ArrowDownRight className="w-4 h-4 text-amber-600" />
-      <span className="text-[12.5px] text-amber-700 font-medium">
+    <div className="flex items-center gap-2 mt-2.5 px-3 py-2 bg-amber-400/10 rounded-lg">
+      <ArrowDownRight className="w-4 h-4 text-amber-400" />
+      <span className="text-[12.5px] text-amber-400 font-medium">
         {formatMins(behind)} behind avg · ~{Math.round(usableHoursLeft)}h left today
       </span>
     </div>
@@ -146,11 +146,11 @@ function PaceIndicator({ todayMinutes, avgDailyMinutes }: { todayMinutes: number
 }
 
 const TASK_TYPE_COLORS: Record<string, string> = {
-  study: '#ea580c',
-  video: '#2563eb',
-  revision: '#8b5cf6',
-  practice: '#16a34a',
-  other: '#6b7280',
+  study: '#DFD0B8',
+  video: '#7A8B9A',
+  revision: '#a78bfa',
+  practice: '#6B9080',
+  other: '#948979',
 };
 
 export default function AnalyticsPage() {
@@ -185,7 +185,7 @@ export default function AnalyticsPage() {
   if (loading || !data) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin w-8 h-8 border-4 border-orange-200 border-t-orange-600 rounded-full" />
+        <div className="animate-spin w-8 h-8 border-4 border-[#948979]/30 border-t-[#DFD0B8] rounded-full" />
       </div>
     );
   }
@@ -205,18 +205,18 @@ export default function AnalyticsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-[22px] font-semibold text-gray-900 tracking-tight">Analytics</h1>
-          <p className="text-[13px] text-gray-400 mt-0.5 font-medium">Your study patterns & progress</p>
+          <h1 className="text-[22px] font-semibold text-[#F0E6D3] tracking-tight">Analytics</h1>
+          <p className="text-[13px] text-[#948979] mt-0.5 font-medium">Your study patterns & progress</p>
         </div>
-        <div className="flex gap-1.5 bg-gray-100 rounded-lg p-1">
+        <div className="flex gap-1.5 bg-[#393E46] rounded-lg p-1">
           {(['week', 'month', 'all'] as const).map((p) => (
             <button
               key={p}
               onClick={() => setPeriod(p)}
               className={`px-3.5 py-1.5 text-[12.5px] font-medium rounded-md transition-all ${
                 period === p
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-[#2D333B] text-[#DFD0B8] shadow-sm'
+                  : 'text-[#948979] hover:text-[#DFD0B8]'
               }`}
             >
               {p === 'week' ? '7 Days' : p === 'month' ? 'Month' : 'All'}
@@ -226,15 +226,15 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Today's Focus Card */}
-      <Card className="border-orange-200 bg-gradient-to-br from-orange-50/50 to-white overflow-hidden">
+      <Card className="border-[#DFD0B8]/20 bg-gradient-to-br from-[#DFD0B8]/5 to-[#2D333B] overflow-hidden">
         <CardContent className="pt-5 pb-5">
           <div className="flex items-start justify-between mb-1">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Clock className="w-4 h-4 text-orange-600" />
+              <div className="w-8 h-8 bg-[#DFD0B8]/10 rounded-lg flex items-center justify-center">
+                <Clock className="w-4 h-4 text-[#DFD0B8]" />
               </div>
               <div>
-                <span className="block text-[12px] text-gray-400 font-medium uppercase tracking-wide">
+                <span className="block text-[12px] text-[#948979] font-medium uppercase tracking-wide">
                   Today&apos;s Study
                   <InfoTip
                     text="Total time studied today from timer sessions. The pace indicator compares this to your 7-day average and shows how much of the day is left."
@@ -247,8 +247,8 @@ export default function AnalyticsPage() {
             {todayVsYesterday !== 0 && (
               <span className={`flex items-center gap-0.5 text-[11.5px] font-medium px-2 py-0.5 rounded-full ${
                 todayVsYesterday > 0
-                  ? 'bg-green-50 text-green-700'
-                  : 'bg-red-50 text-red-600'
+                  ? 'bg-emerald-400/10 text-emerald-400'
+                  : 'bg-rose-400/10 text-rose-400'
               }`}>
                 {todayVsYesterday > 0 ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
                 {formatMins(Math.abs(todayVsYesterday))} vs yesterday
@@ -257,23 +257,23 @@ export default function AnalyticsPage() {
           </div>
 
           <div className="flex items-end gap-3 mt-2">
-            <span className="text-[36px] font-bold text-gray-900 leading-none tracking-tight">
+            <span className="text-[36px] font-bold text-[#F0E6D3] leading-none tracking-tight">
               {formatMins(data.todayMinutes)}
             </span>
-            <span className="text-[13px] text-gray-400 font-medium mb-1">
+            <span className="text-[13px] text-[#948979] font-medium mb-1">
               / avg {formatMins(data.avgDailyMinutes)}
             </span>
           </div>
 
           {/* Progress bar */}
-          <div className="mt-3 h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div className="mt-3 h-2 bg-[#393E46] rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-700 ease-out"
               style={{
                 width: `${Math.min(100, data.avgDailyMinutes > 0 ? (data.todayMinutes / data.avgDailyMinutes) * 100 : (data.todayMinutes > 0 ? 100 : 0))}%`,
                 background: data.todayMinutes >= data.avgDailyMinutes
-                  ? 'linear-gradient(90deg, #16a34a, #22c55e)'
-                  : 'linear-gradient(90deg, #ea580c, #f97316)',
+                  ? 'linear-gradient(90deg, #6B9080, #7daa96)'
+                  : 'linear-gradient(90deg, #DFD0B8, #B8A99A)',
               }}
             />
           </div>
@@ -281,16 +281,16 @@ export default function AnalyticsPage() {
           <PaceIndicator todayMinutes={data.todayMinutes} avgDailyMinutes={data.avgDailyMinutes} />
 
           {/* Today's tasks mini-summary */}
-          <div className="flex items-center gap-4 mt-3 pt-3 border-t border-orange-100">
+          <div className="flex items-center gap-4 mt-3 pt-3 border-t border-[#948979]/15">
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-              <span className="text-[12.5px] text-gray-600 font-medium">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-[12.5px] text-[#948979] font-medium">
                 {data.todayCompleted}/{data.todayTasks} tasks done
               </span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Flame className="w-3.5 h-3.5 text-orange-500" />
-              <span className="text-[12.5px] text-gray-600 font-medium">
+              <Flame className="w-3.5 h-3.5 text-[#DFD0B8]" />
+              <span className="text-[12.5px] text-[#948979] font-medium">
                 {data.streak} day streak
               </span>
             </div>
@@ -300,9 +300,9 @@ export default function AnalyticsPage() {
 
       {/* Quick Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <Card className="border-gray-200">
+        <Card className="border-[#948979]/15">
           <CardContent className="py-3.5 px-4">
-            <span className="block text-[11px] text-gray-400 font-medium uppercase tracking-wide">
+            <span className="block text-[11px] text-[#948979] font-medium uppercase tracking-wide">
               Total Study
               <InfoTip
                 text="Sum of all timer sessions in the selected period."
@@ -310,12 +310,12 @@ export default function AnalyticsPage() {
                 onToggle={() => setOpenTip(openTip === 'total' ? null : 'total')}
               />
             </span>
-            <p className="text-[22px] font-bold text-gray-900 tracking-tight mt-1">{formatHours(data.totalHours)}</p>
+            <p className="text-[22px] font-bold text-[#F0E6D3] tracking-tight mt-1">{formatHours(data.totalHours)}</p>
           </CardContent>
         </Card>
-        <Card className="border-gray-200">
+        <Card className="border-[#948979]/15">
           <CardContent className="py-3.5 px-4">
-            <span className="block text-[11px] text-gray-400 font-medium uppercase tracking-wide">
+            <span className="block text-[11px] text-[#948979] font-medium uppercase tracking-wide">
               Task Rate
               <InfoTip
                 text="Percentage of tasks marked as completed out of all tasks in this period."
@@ -323,12 +323,12 @@ export default function AnalyticsPage() {
                 onToggle={() => setOpenTip(openTip === 'taskrate' ? null : 'taskrate')}
               />
             </span>
-            <p className="text-[22px] font-bold text-gray-900 tracking-tight mt-1">{data.taskCompletionRate}%</p>
+            <p className="text-[22px] font-bold text-[#F0E6D3] tracking-tight mt-1">{data.taskCompletionRate}%</p>
           </CardContent>
         </Card>
-        <Card className="border-gray-200">
+        <Card className="border-[#948979]/15">
           <CardContent className="py-3.5 px-4">
-            <span className="block text-[11px] text-gray-400 font-medium uppercase tracking-wide">
+            <span className="block text-[11px] text-[#948979] font-medium uppercase tracking-wide">
               Goal Rate
               <InfoTip
                 text="Percentage of goals marked as completed in this period."
@@ -336,12 +336,12 @@ export default function AnalyticsPage() {
                 onToggle={() => setOpenTip(openTip === 'goalrate' ? null : 'goalrate')}
               />
             </span>
-            <p className="text-[22px] font-bold text-gray-900 tracking-tight mt-1">{data.goalCompletionRate}%</p>
+            <p className="text-[22px] font-bold text-[#F0E6D3] tracking-tight mt-1">{data.goalCompletionRate}%</p>
           </CardContent>
         </Card>
-        <Card className="border-gray-200">
+        <Card className="border-[#948979]/15">
           <CardContent className="py-3.5 px-4">
-            <span className="block text-[11px] text-gray-400 font-medium uppercase tracking-wide">
+            <span className="block text-[11px] text-[#948979] font-medium uppercase tracking-wide">
               Best Day
               <InfoTip
                 text="Your longest study session day in the last 7 days."
@@ -349,16 +349,16 @@ export default function AnalyticsPage() {
                 onToggle={() => setOpenTip(openTip === 'bestday' ? null : 'bestday')}
               />
             </span>
-            <p className="text-[22px] font-bold text-gray-900 tracking-tight mt-1">{formatMins(data.bestDayMinutes)}</p>
+            <p className="text-[22px] font-bold text-[#F0E6D3] tracking-tight mt-1">{formatMins(data.bestDayMinutes)}</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Daily Study Chart */}
-      <Card className="border-gray-200">
+      <Card className="border-[#948979]/15">
         <CardContent className="pt-5 pb-4">
           <div className="flex items-center justify-between mb-4">
-            <span className="block text-[14px] font-semibold text-gray-900 tracking-tight">
+            <span className="block text-[14px] font-semibold text-[#F0E6D3] tracking-tight">
               Daily Study Time
               <InfoTip
                 text="Bar chart showing hours studied each day. Higher bars mean more study time. Compare today's bar to others to see your consistency."
@@ -368,17 +368,17 @@ export default function AnalyticsPage() {
             </span>
           </div>
           {data.studyTimeByDay.length === 0 ? (
-            <div className="text-center py-10 text-gray-400">
+            <div className="text-center py-10 text-[#948979]">
               <BarChart3 className="w-10 h-10 mx-auto mb-2 opacity-40" />
               <p className="text-[13px]">No study sessions yet</p>
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={data.studyTimeByDay} barCategoryGap="20%">
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#393E46" vertical={false} />
                 <XAxis
                   dataKey="date"
-                  tick={{ fontSize: 11, fill: '#999' }}
+                  tick={{ fontSize: 11, fill: '#948979' }}
                   tickFormatter={(v) => {
                     const d = new Date(v + 'T00:00:00');
                     return d.toLocaleDateString('en-IN', { weekday: 'short' });
@@ -387,21 +387,21 @@ export default function AnalyticsPage() {
                   tickLine={false}
                 />
                 <YAxis
-                  tick={{ fontSize: 11, fill: '#999' }}
+                  tick={{ fontSize: 11, fill: '#948979' }}
                   axisLine={false}
                   tickLine={false}
                   width={30}
                   tickFormatter={(v) => `${v}h`}
                 />
                 <Tooltip
-                  contentStyle={{ borderRadius: 10, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', fontSize: 13 }}
+                  contentStyle={{ borderRadius: 10, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', fontSize: 13, backgroundColor: '#1C2028', color: '#F0E6D3' }}
                   formatter={(value) => [`${value}h`, 'Study']}
                   labelFormatter={(label) => {
                     const d = new Date(label + 'T00:00:00');
                     return d.toLocaleDateString('en-IN', { weekday: 'long', month: 'short', day: 'numeric' });
                   }}
                 />
-                <Bar dataKey="hours" fill="#ea580c" radius={[6, 6, 0, 0]} maxBarSize={40} />
+                <Bar dataKey="hours" fill="#DFD0B8" radius={[6, 6, 0, 0]} maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -409,9 +409,9 @@ export default function AnalyticsPage() {
       </Card>
 
       {/* Task Breakdown by Type */}
-      <Card className="border-gray-200">
+      <Card className="border-[#948979]/15">
         <CardContent className="pt-5 pb-4">
-          <span className="block text-[14px] font-semibold text-gray-900 tracking-tight mb-4">
+          <span className="block text-[14px] font-semibold text-[#F0E6D3] tracking-tight mb-4">
             Tasks by Type
             <InfoTip
               text="Shows how many tasks of each type (study, video, practice, etc.) you completed vs total. Helps identify which areas you're focusing on."
@@ -420,7 +420,7 @@ export default function AnalyticsPage() {
             />
           </span>
           {taskTypeData.length === 0 ? (
-            <div className="text-center py-10 text-gray-400">
+            <div className="text-center py-10 text-[#948979]">
               <Target className="w-10 h-10 mx-auto mb-2 opacity-40" />
               <p className="text-[13px]">No tasks in this period</p>
             </div>
@@ -434,14 +434,14 @@ export default function AnalyticsPage() {
                         className="w-2.5 h-2.5 rounded-full"
                         style={{ backgroundColor: TASK_TYPE_COLORS[item.key] || '#6b7280' }}
                       />
-                      <span className="text-[13px] font-medium text-gray-700">{item.name}</span>
+                      <span className="text-[13px] font-medium text-[#DFD0B8]">{item.name}</span>
                     </div>
-                    <span className="text-[12px] text-gray-400 font-medium">
+                    <span className="text-[12px] text-[#948979] font-medium">
                       {item.completed}/{item.total}
                       <span className="ml-1.5 text-[11px]">({item.rate}%)</span>
                     </span>
                   </div>
-                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-2 bg-[#393E46] rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -458,9 +458,9 @@ export default function AnalyticsPage() {
       </Card>
 
       {/* Progress Summary */}
-      <Card className="border-gray-200">
+      <Card className="border-[#948979]/15">
         <CardContent className="pt-5 pb-4">
-          <span className="block text-[14px] font-semibold text-gray-900 tracking-tight mb-4">
+          <span className="block text-[14px] font-semibold text-[#F0E6D3] tracking-tight mb-4">
             Progress Overview
             <InfoTip
               text="A snapshot of your goals and tasks for this period. Green = completed, gray = remaining."
@@ -476,13 +476,13 @@ export default function AnalyticsPage() {
                   <path
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke="#f0f0f0"
+                    stroke="#393E46"
                     strokeWidth="3"
                   />
                   <path
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke="#ea580c"
+                    stroke="#DFD0B8"
                     strokeWidth="3"
                     strokeDasharray={`${data.goalCompletionRate}, 100`}
                     strokeLinecap="round"
@@ -490,11 +490,11 @@ export default function AnalyticsPage() {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[18px] font-bold text-gray-900">{data.goalCompletionRate}%</span>
+                  <span className="text-[18px] font-bold text-[#F0E6D3]">{data.goalCompletionRate}%</span>
                 </div>
               </div>
-              <p className="text-[12px] text-gray-500 font-medium mt-2">Goals</p>
-              <p className="text-[11px] text-gray-400">{data.completedGoals} of {data.totalGoals}</p>
+              <p className="text-[12px] text-[#948979] font-medium mt-2">Goals</p>
+              <p className="text-[11px] text-[#948979]/60">{data.completedGoals} of {data.totalGoals}</p>
             </div>
             {/* Tasks ring */}
             <div className="text-center">
@@ -503,13 +503,13 @@ export default function AnalyticsPage() {
                   <path
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke="#f0f0f0"
+                    stroke="#393E46"
                     strokeWidth="3"
                   />
                   <path
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke="#16a34a"
+                    stroke="#6B9080"
                     strokeWidth="3"
                     strokeDasharray={`${data.taskCompletionRate}, 100`}
                     strokeLinecap="round"
@@ -517,11 +517,11 @@ export default function AnalyticsPage() {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[18px] font-bold text-gray-900">{data.taskCompletionRate}%</span>
+                  <span className="text-[18px] font-bold text-[#F0E6D3]">{data.taskCompletionRate}%</span>
                 </div>
               </div>
-              <p className="text-[12px] text-gray-500 font-medium mt-2">Tasks</p>
-              <p className="text-[11px] text-gray-400">{data.completedTasks} of {data.totalTasks}</p>
+              <p className="text-[12px] text-[#948979] font-medium mt-2">Tasks</p>
+              <p className="text-[11px] text-[#948979]/60">{data.completedTasks} of {data.totalTasks}</p>
             </div>
           </div>
         </CardContent>

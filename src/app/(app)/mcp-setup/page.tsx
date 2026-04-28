@@ -29,20 +29,20 @@ function CopyBlock({ code, label }: { code: string; label?: string }) {
   return (
     <div className="relative group">
       {label && (
-        <span className="text-[11px] text-gray-400 font-medium uppercase tracking-wide block mb-1.5">{label}</span>
+        <span className="text-[11px] text-[#948979] font-medium uppercase tracking-wide block mb-1.5">{label}</span>
       )}
-      <div className="bg-gray-900 rounded-lg overflow-hidden">
-        <div className="flex items-center justify-between px-3 py-1.5 bg-gray-800">
-          <span className="text-[11px] text-gray-400 font-mono">config</span>
+      <div className="bg-[#1C2028] rounded-lg overflow-hidden">
+        <div className="flex items-center justify-between px-3 py-1.5 bg-[#222831]">
+          <span className="text-[11px] text-[#948979] font-mono">config</span>
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1 text-[11px] text-gray-400 hover:text-white transition-colors"
+            className="flex items-center gap-1 text-[11px] text-[#948979] hover:text-[#F0E6D3] transition-colors"
           >
-            {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
+            {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
             {copied ? 'Copied!' : 'Copy'}
           </button>
         </div>
-        <pre className="p-3 text-[12.5px] text-gray-100 font-mono overflow-x-auto leading-relaxed whitespace-pre">
+        <pre className="p-3 text-[12.5px] text-[#DFD0B8] font-mono overflow-x-auto leading-relaxed whitespace-pre">
           {code}
         </pre>
       </div>
@@ -62,31 +62,31 @@ function ToolCard({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden">
+    <div className="border border-[#948979]/15 rounded-lg overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-[#393E46] transition-colors"
       >
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 bg-orange-100 rounded-md flex items-center justify-center shrink-0">
-            <Wrench className="w-3.5 h-3.5 text-orange-600" />
+          <div className="w-7 h-7 bg-[#DFD0B8]/10 rounded-md flex items-center justify-center shrink-0">
+            <Wrench className="w-3.5 h-3.5 text-[#DFD0B8]" />
           </div>
           <div>
-            <p className="text-[13px] font-semibold text-gray-900 font-mono">{name}</p>
-            <p className="text-[12px] text-gray-500 mt-0.5">{description}</p>
+            <p className="text-[13px] font-semibold text-[#F0E6D3] font-mono">{name}</p>
+            <p className="text-[12px] text-[#948979] mt-0.5">{description}</p>
           </div>
         </div>
         {open ? (
-          <ChevronUp className="w-4 h-4 text-gray-400 shrink-0" />
+          <ChevronUp className="w-4 h-4 text-[#948979] shrink-0" />
         ) : (
-          <ChevronDown className="w-4 h-4 text-gray-400 shrink-0" />
+          <ChevronDown className="w-4 h-4 text-[#948979] shrink-0" />
         )}
       </button>
       {open && (
-        <div className="px-4 pb-3 border-t border-gray-100 pt-3">
-          <p className="text-[11px] text-gray-400 font-medium uppercase tracking-wide mb-1.5">Example prompt</p>
-          <div className="bg-orange-50 rounded-lg px-3 py-2.5">
-            <p className="text-[12.5px] text-orange-800 leading-relaxed">&ldquo;{example}&rdquo;</p>
+        <div className="px-4 pb-3 border-t border-[#948979]/15 pt-3">
+          <p className="text-[11px] text-[#948979] font-medium uppercase tracking-wide mb-1.5">Example prompt</p>
+          <div className="bg-[#DFD0B8]/8 rounded-lg px-3 py-2.5">
+            <p className="text-[12.5px] text-[#DFD0B8] leading-relaxed">&ldquo;{example}&rdquo;</p>
           </div>
         </div>
       )}
@@ -162,27 +162,27 @@ export default function MCPSetupPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-2.5 mb-1">
-          <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center">
-            <Bot className="w-5 h-5 text-orange-600" />
+          <div className="w-9 h-9 bg-[#DFD0B8]/10 rounded-lg flex items-center justify-center">
+            <Bot className="w-5 h-5 text-[#DFD0B8]" />
           </div>
           <div>
-            <h1 className="text-[22px] font-semibold text-gray-900 tracking-tight">MCP Setup</h1>
-            <p className="text-[13px] text-gray-400 font-medium">Connect any AI client to manage your study plan</p>
+            <h1 className="text-[22px] font-semibold text-[#F0E6D3] tracking-tight">MCP Setup</h1>
+            <p className="text-[13px] text-[#948979] font-medium">Connect any AI client to manage your study plan</p>
           </div>
         </div>
       </div>
 
       {/* What is MCP */}
-      <Card className="border-orange-200 bg-orange-50/50">
+      <Card className="border-[#DFD0B8]/20 bg-[#DFD0B8]/5">
         <CardContent className="py-4">
           <div className="flex gap-3">
-            <Zap className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
+            <Zap className="w-5 h-5 text-[#DFD0B8] shrink-0 mt-0.5" />
             <div>
-              <p className="text-[13.5px] font-semibold text-gray-900 mb-1">What is this?</p>
-              <p className="text-[13px] text-gray-600 leading-relaxed">
+              <p className="text-[13.5px] font-semibold text-[#F0E6D3] mb-1">What is this?</p>
+              <p className="text-[13px] text-[#948979] leading-relaxed">
                 MCP (Model Context Protocol) lets AI assistants directly create goals, add tasks, and check your analytics — all through conversation. 
                 The MCP server is built into this app — no separate setup needed. Any MCP-compatible client (Claude, Cursor, VS Code Copilot, etc.) can connect. 
-                Just tell your AI: <span className="font-medium text-gray-800">&ldquo;Create a weekly plan for Indian Polity chapters 6-10&rdquo;</span> and it does it instantly.
+                Just tell your AI: <span className="font-medium text-[#DFD0B8]">&ldquo;Create a weekly plan for Indian Polity chapters 6-10&rdquo;</span> and it does it instantly.
               </p>
             </div>
           </div>
@@ -192,12 +192,12 @@ export default function MCPSetupPage() {
       {/* Step 1: Get Access Token */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-[12px] font-bold">1</span>
-          <h2 className="text-[15px] font-semibold text-gray-900 tracking-tight">Get Your Access Token</h2>
+          <span className="w-6 h-6 bg-[#DFD0B8] text-[#222831] rounded-full flex items-center justify-center text-[12px] font-bold">1</span>
+          <h2 className="text-[15px] font-semibold text-[#F0E6D3] tracking-tight">Get Your Access Token</h2>
         </div>
-        <Card className={`border-gray-200 ${token ? 'border-green-300 bg-green-50/30' : ''}`}>
+        <Card className={`border-[#948979]/15 ${token ? 'border-emerald-400/30 bg-emerald-400/5' : ''}`}>
           <CardContent className="py-4 space-y-3">
-            <p className="text-[13px] text-gray-600 leading-relaxed">
+            <p className="text-[13px] text-[#948979] leading-relaxed">
               Click the button below to generate your access token. It will be automatically injected into all the config snippets below — just copy and paste.
             </p>
 
@@ -205,7 +205,7 @@ export default function MCPSetupPage() {
               <button
                 onClick={handleGetToken}
                 disabled={tokenLoading}
-                className="flex items-center gap-2 px-4 py-2.5 bg-orange-600 text-white text-[13px] font-semibold rounded-lg hover:bg-orange-700 active:scale-[0.98] transition-all disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2.5 bg-[#DFD0B8] text-[#222831] text-[13px] font-semibold rounded-lg hover:bg-[#C4B8A2] active:scale-[0.98] transition-all disabled:opacity-50"
               >
                 <Key className="w-4 h-4" />
                 {tokenLoading ? 'Loading...' : token ? 'Refresh Token' : 'Get My Token'}
@@ -214,26 +214,26 @@ export default function MCPSetupPage() {
               {token && (
                 <button
                   onClick={handleCopyToken}
-                  className="flex items-center gap-1.5 px-3 py-2.5 bg-gray-100 text-gray-700 text-[13px] font-medium rounded-lg hover:bg-gray-200 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-2.5 bg-[#393E46] text-[#DFD0B8] text-[13px] font-medium rounded-lg hover:bg-[#414851] transition-colors"
                 >
-                  {tokenCopied ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  {tokenCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   {tokenCopied ? 'Copied!' : 'Copy Token'}
                 </button>
               )}
             </div>
 
             {token ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2">
-                <p className="text-[12px] text-green-800">
+              <div className="bg-emerald-400/10 border border-emerald-400/20 rounded-lg px-3 py-2">
+                <p className="text-[12px] text-emerald-400">
                   <span className="font-semibold">Token ready!</span> Your token has been injected into all config snippets below. Just copy the config you need — no manual editing required.
                 </p>
-                <p className="text-[11px] text-green-600 mt-1 font-mono break-all">
+                <p className="text-[11px] text-emerald-400/60 mt-1 font-mono break-all">
                   {token.slice(0, 20)}...{token.slice(-20)}
                 </p>
               </div>
             ) : (
-              <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                <p className="text-[12px] text-amber-800">
+              <div className="bg-amber-400/10 border border-amber-400/20 rounded-lg px-3 py-2">
+                <p className="text-[12px] text-amber-400">
                   <span className="font-semibold">Note:</span> Token expires after 30 days. Come back here to refresh it when needed.
                 </p>
               </div>
@@ -245,22 +245,22 @@ export default function MCPSetupPage() {
       {/* Step 3a: Claude Desktop */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-[12px] font-bold">2a</span>
+          <span className="w-6 h-6 bg-[#DFD0B8] text-[#222831] rounded-full flex items-center justify-center text-[12px] font-bold">2a</span>
           <div className="flex items-center gap-2">
-            <Monitor className="w-4 h-4 text-gray-500" />
-            <h2 className="text-[15px] font-semibold text-gray-900 tracking-tight">Claude Desktop</h2>
+            <Monitor className="w-4 h-4 text-[#948979]" />
+            <h2 className="text-[15px] font-semibold text-[#F0E6D3] tracking-tight">Claude Desktop</h2>
           </div>
         </div>
-        <Card className="border-gray-200">
+        <Card className="border-[#948979]/15">
           <CardContent className="py-4 space-y-3">
-            <ol className="space-y-2 text-[13px] text-gray-600">
+            <ol className="space-y-2 text-[13px] text-[#948979]">
               <li className="flex gap-2">
-                <span className="text-orange-500 font-semibold shrink-0">1.</span>
-                Open Claude Desktop → <span className="font-medium text-gray-800">Settings</span> → <span className="font-medium text-gray-800">Developer</span> → <span className="font-medium text-gray-800">Edit Config</span>
+                <span className="text-[#DFD0B8] font-semibold shrink-0">1.</span>
+                Open Claude Desktop → <span className="font-medium text-[#F0E6D3]">Settings</span> → <span className="font-medium text-[#F0E6D3]">Developer</span> → <span className="font-medium text-[#F0E6D3]">Edit Config</span>
               </li>
               <li className="flex gap-2">
-                <span className="text-orange-500 font-semibold shrink-0">2.</span>
-                <span>Paste this into <span className="font-mono text-[12px] text-gray-500">claude_desktop_config.json</span>:</span>
+                <span className="text-[#DFD0B8] font-semibold shrink-0">2.</span>
+                <span>Paste this into <span className="font-mono text-[12px] text-[#948979]">claude_desktop_config.json</span>:</span>
               </li>
             </ol>
             <CopyBlock
@@ -268,15 +268,15 @@ export default function MCPSetupPage() {
               code={claudeDesktopConfig}
             />
             {!token && (
-              <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                <p className="text-[12px] text-amber-800">
+              <div className="bg-amber-400/10 border border-amber-400/20 rounded-lg px-3 py-2">
+                <p className="text-[12px] text-amber-400">
                   <span className="font-semibold">Tip:</span> Click &ldquo;Get My Token&rdquo; in Step 1 to auto-fill the token above.
                 </p>
               </div>
             )}
-            <ol start={3} className="space-y-2 text-[13px] text-gray-600">
+            <ol start={3} className="space-y-2 text-[13px] text-[#948979]">
               <li className="flex gap-2">
-                <span className="text-orange-500 font-semibold shrink-0">3.</span>
+                <span className="text-[#DFD0B8] font-semibold shrink-0">3.</span>
                 Restart Claude Desktop. You&apos;ll see a 🔨 icon — that means MCP tools are connected.
               </li>
             </ol>
@@ -287,19 +287,19 @@ export default function MCPSetupPage() {
       {/* Step 3b: Claude Code */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-[12px] font-bold">2b</span>
+          <span className="w-6 h-6 bg-[#DFD0B8] text-[#222831] rounded-full flex items-center justify-center text-[12px] font-bold">2b</span>
           <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-gray-500" />
-            <h2 className="text-[15px] font-semibold text-gray-900 tracking-tight">Claude Code (CLI)</h2>
+            <Terminal className="w-4 h-4 text-[#948979]" />
+            <h2 className="text-[15px] font-semibold text-[#F0E6D3] tracking-tight">Claude Code (CLI)</h2>
           </div>
         </div>
-        <Card className="border-gray-200">
+        <Card className="border-[#948979]/15">
           <CardContent className="py-4 space-y-3">
-            <p className="text-[13px] text-gray-600">
+            <p className="text-[13px] text-[#948979]">
               Run this command in your terminal:
             </p>
             <CopyBlock code={claudeCodeConfig} />
-            <p className="text-[13px] text-gray-600">
+            <p className="text-[13px] text-[#948979]">
               Verify it&apos;s connected:
             </p>
             <CopyBlock code="claude mcp list" />
@@ -310,30 +310,30 @@ export default function MCPSetupPage() {
       {/* Step 3c: Cursor / VS Code / Other */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-[12px] font-bold">2c</span>
+          <span className="w-6 h-6 bg-[#DFD0B8] text-[#222831] rounded-full flex items-center justify-center text-[12px] font-bold">2c</span>
           <div className="flex items-center gap-2">
-            <Monitor className="w-4 h-4 text-gray-500" />
-            <h2 className="text-[15px] font-semibold text-gray-900 tracking-tight">Cursor / VS Code / Other MCP Clients</h2>
+            <Monitor className="w-4 h-4 text-[#948979]" />
+            <h2 className="text-[15px] font-semibold text-[#F0E6D3] tracking-tight">Cursor / VS Code / Other MCP Clients</h2>
           </div>
         </div>
-        <Card className="border-gray-200">
+        <Card className="border-[#948979]/15">
           <CardContent className="py-4 space-y-3">
-            <p className="text-[13px] text-gray-600">
-              Add this to your MCP settings (usually <span className="font-mono text-[12px] text-gray-500">.cursor/mcp.json</span> or equivalent):
+            <p className="text-[13px] text-[#948979]">
+              Add this to your MCP settings (usually <span className="font-mono text-[12px] text-[#948979]/70">.cursor/mcp.json</span> or equivalent):
             </p>
             <CopyBlock
               label="MCP config"
               code={cursorConfig}
             />
             {token ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2">
-                <p className="text-[12px] text-green-800">
+              <div className="bg-emerald-400/10 border border-emerald-400/20 rounded-lg px-3 py-2">
+                <p className="text-[12px] text-emerald-400">
                   <span className="font-semibold">Ready to copy!</span> Your token is already injected above.
                 </p>
               </div>
             ) : (
-              <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                <p className="text-[12px] text-amber-800">
+              <div className="bg-amber-400/10 border border-amber-400/20 rounded-lg px-3 py-2">
+                <p className="text-[12px] text-amber-400">
                   <span className="font-semibold">Any HTTP MCP client works!</span> Click &ldquo;Get My Token&rdquo; in Step 1 to auto-fill all configs.
                 </p>
               </div>
@@ -345,8 +345,8 @@ export default function MCPSetupPage() {
       {/* Step 3: Available Tools */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-[12px] font-bold">3</span>
-          <h2 className="text-[15px] font-semibold text-gray-900 tracking-tight">Available Tools ({13})</h2>
+          <span className="w-6 h-6 bg-[#DFD0B8] text-[#222831] rounded-full flex items-center justify-center text-[12px] font-bold">3</span>
+          <h2 className="text-[15px] font-semibold text-[#F0E6D3] tracking-tight">Available Tools ({13})</h2>
         </div>
         <div className="space-y-2">
           <ToolCard
@@ -420,10 +420,10 @@ export default function MCPSetupPage() {
       {/* Step 4: Example Conversations */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-[12px] font-bold">4</span>
-          <h2 className="text-[15px] font-semibold text-gray-900 tracking-tight">Try These Prompts</h2>
+          <span className="w-6 h-6 bg-[#DFD0B8] text-[#222831] rounded-full flex items-center justify-center text-[12px] font-bold">4</span>
+          <h2 className="text-[15px] font-semibold text-[#F0E6D3] tracking-tight">Try These Prompts</h2>
         </div>
-        <Card className="border-gray-200">
+        <Card className="border-[#948979]/15">
           <CardContent className="py-4 space-y-3">
             {[
               {
@@ -447,14 +447,14 @@ export default function MCPSetupPage() {
                 prompt: 'Add a remark to my current weekly goal: Need to focus more on map-based questions for Geography.',
               },
             ].map((item, i) => (
-              <div key={i} className="flex gap-3 p-3 bg-gray-50 rounded-lg">
+              <div key={i} className="flex gap-3 p-3 bg-[#393E46] rounded-lg">
                 <span className="text-xl shrink-0">{item.icon}</span>
                 <div>
                   <div className="flex items-center gap-1.5 mb-1">
-                    <MessageSquare className="w-3 h-3 text-gray-400" />
-                    <span className="text-[11px] text-gray-400 font-medium uppercase tracking-wide">Example prompt</span>
+                    <MessageSquare className="w-3 h-3 text-[#948979]" />
+                    <span className="text-[11px] text-[#948979] font-medium uppercase tracking-wide">Example prompt</span>
                   </div>
-                  <p className="text-[13px] text-gray-700 leading-relaxed">{item.prompt}</p>
+                  <p className="text-[13px] text-[#DFD0B8] leading-relaxed">{item.prompt}</p>
                 </div>
               </div>
             ))}

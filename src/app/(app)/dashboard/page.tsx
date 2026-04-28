@@ -307,17 +307,17 @@ export default function DashboardPage() {
   };
 
   const taskTypeColors: Record<string, string> = {
-    study: 'bg-blue-100 text-blue-700',
-    video: 'bg-red-100 text-red-700',
-    revision: 'bg-green-100 text-green-700',
-    practice: 'bg-purple-100 text-purple-700',
-    other: 'bg-gray-100 text-gray-700',
+    study: 'bg-sky-400/10 text-sky-400',
+    video: 'bg-rose-400/10 text-rose-400',
+    revision: 'bg-emerald-400/10 text-emerald-400',
+    practice: 'bg-purple-400/10 text-purple-400',
+    other: 'bg-[#948979]/10 text-[#948979]',
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin w-8 h-8 border-4 border-orange-200 border-t-orange-600 rounded-full" />
+        <div className="animate-spin w-8 h-8 border-4 border-[#948979]/30 border-t-[#DFD0B8] rounded-full" />
       </div>
     );
   }
@@ -330,73 +330,73 @@ export default function DashboardPage() {
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Page title */}
       <div>
-        <h1 className="text-[22px] font-semibold text-gray-900 tracking-tight">Dashboard</h1>
-        <p className="text-[13px] text-gray-400 mt-1 font-medium">
+        <h1 className="text-[22px] font-semibold text-[#F0E6D3] tracking-tight">Dashboard</h1>
+        <p className="text-[13px] text-[#948979] mt-1 font-medium">
           {format(new Date(), 'EEEE, MMMM d, yyyy')}
         </p>
       </div>
 
       {/* Quick stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="border-orange-200 shadow-sm">
+        <Card className="border-[#DFD0B8]/20 shadow-sm">
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Clock className="w-5 h-5 text-orange-600" />
+              <div className="w-10 h-10 bg-[#DFD0B8]/10 rounded-lg flex items-center justify-center">
+                <Clock className="w-5 h-5 text-[#DFD0B8]" />
               </div>
               <div>
-                <p className="text-[20px] font-semibold text-gray-900 tracking-tight">
+                <p className="text-[20px] font-semibold text-[#F0E6D3] tracking-tight">
                   {analytics ? `${Math.round(analytics.todayMinutes / 60 * 10) / 10}h` : '0h'}
                 </p>
-                <p className="text-[11.5px] text-gray-400 font-medium">Today&apos;s Study</p>
+                <p className="text-[11.5px] text-[#948979] font-medium">Today&apos;s Study</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-green-200 shadow-sm">
+        <Card className="border-emerald-400/20 shadow-sm">
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <CheckCircle2 className="w-5 h-5 text-green-600" />
+              <div className="w-10 h-10 bg-emerald-400/10 rounded-lg flex items-center justify-center">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
               </div>
               <div>
-                <p className="text-[20px] font-semibold text-gray-900 tracking-tight">
+                <p className="text-[20px] font-semibold text-[#F0E6D3] tracking-tight">
                   {todayCompleted}/{todayTotal}
                 </p>
-                <p className="text-[11.5px] text-gray-400 font-medium">Tasks Done</p>
+                <p className="text-[11.5px] text-[#948979] font-medium">Tasks Done</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-blue-200 shadow-sm">
+        <Card className="border-sky-400/20 shadow-sm">
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Target className="w-5 h-5 text-blue-600" />
+              <div className="w-10 h-10 bg-sky-400/10 rounded-lg flex items-center justify-center">
+                <Target className="w-5 h-5 text-sky-400" />
               </div>
               <div>
-                <p className="text-[20px] font-semibold text-gray-900 tracking-tight">
+                <p className="text-[20px] font-semibold text-[#F0E6D3] tracking-tight">
                   {analytics?.taskCompletionRate || 0}%
                 </p>
-                <p className="text-[11.5px] text-gray-400 font-medium">Week Rate</p>
+                <p className="text-[11.5px] text-[#948979] font-medium">Week Rate</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-red-200 shadow-sm">
+        <Card className="border-rose-400/20 shadow-sm">
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                <Flame className="w-5 h-5 text-red-600" />
+              <div className="w-10 h-10 bg-rose-400/10 rounded-lg flex items-center justify-center">
+                <Flame className="w-5 h-5 text-rose-400" />
               </div>
               <div>
-                <p className="text-[20px] font-semibold text-gray-900 tracking-tight">
+                <p className="text-[20px] font-semibold text-[#F0E6D3] tracking-tight">
                   {analytics?.streak || 0}
                 </p>
-                <p className="text-[11.5px] text-gray-400 font-medium">Day Streak</p>
+                <p className="text-[11.5px] text-[#948979] font-medium">Day Streak</p>
               </div>
             </div>
           </CardContent>
@@ -405,10 +405,10 @@ export default function DashboardPage() {
 
       <div className="grid md:grid-cols-3 gap-6">
         {/* Study Timer */}
-        <Card className="md:col-span-1 border-orange-200 shadow-sm">
+        <Card className="md:col-span-1 border-[#DFD0B8]/20 shadow-sm">
           <CardHeader className="pb-3">
             <CardTitle className="text-[15px] font-semibold tracking-tight flex items-center gap-2">
-              <Timer className="w-5 h-5 text-orange-600" />
+              <Timer className="w-5 h-5 text-[#DFD0B8]" />
               Study Timer
             </CardTitle>
           </CardHeader>
@@ -416,17 +416,17 @@ export default function DashboardPage() {
             <div className="text-center">
               <p
                 className={`text-5xl font-mono font-semibold tracking-tighter ${
-                  timerState ? 'text-orange-600' : 'text-gray-300'
+                  timerState ? 'text-[#DFD0B8]' : 'text-[#948979]/40'
                 }`}
               >
                 {formatTime(elapsed)}
               </p>
               {timerState && (
                 <p className={`text-xs mt-2 flex items-center justify-center gap-1 ${
-                  timerState.lastResumedAt === null ? 'text-amber-600' : 'text-green-600'
+                  timerState.lastResumedAt === null ? 'text-amber-400' : 'text-emerald-400'
                 }`}>
                   <span className={`w-2 h-2 rounded-full ${
-                    timerState.lastResumedAt === null ? 'bg-amber-500' : 'bg-green-500 animate-pulse'
+                    timerState.lastResumedAt === null ? 'bg-amber-400' : 'bg-emerald-400 animate-pulse'
                   }`} />
                   {timerState.lastResumedAt === null ? 'Paused' : 'Session in progress'}
                 </p>
@@ -438,7 +438,7 @@ export default function DashboardPage() {
                   {timerState.lastResumedAt === null ? (
                     <Button
                       onClick={resumeTimer}
-                      className="flex-1 bg-orange-600 hover:bg-orange-700 text-white"
+                      className="flex-1 bg-[#DFD0B8] hover:bg-[#C4B8A2] text-[#222831]"
                     >
                       <Play className="w-4 h-4 mr-2" />
                       Resume
@@ -456,7 +456,7 @@ export default function DashboardPage() {
                     onClick={stopTimer}
                     disabled={timerLoading}
                     variant="outline"
-                    className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                    className="border-rose-400/30 text-rose-400 hover:bg-rose-400/10 hover:text-rose-300"
                   >
                     <Square className="w-4 h-4" />
                   </Button>
@@ -465,7 +465,7 @@ export default function DashboardPage() {
             ) : (
               <Button
                 onClick={startTimer}
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+                className="w-full bg-[#DFD0B8] hover:bg-[#C4B8A2] text-[#222831]"
               >
                 <Play className="w-4 h-4 mr-2" />
                 Start Studying
@@ -479,16 +479,16 @@ export default function DashboardPage() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-[15px] font-semibold tracking-tight flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-orange-600" />
+                <BookOpen className="w-5 h-5 text-[#DFD0B8]" />
                 Today&apos;s Tasks
               </CardTitle>
-              <span className="text-[13px] text-gray-400 font-medium">{completionPercent}%</span>
+              <span className="text-[13px] text-[#948979] font-medium">{completionPercent}%</span>
             </div>
             <Progress value={completionPercent} className="h-2 mt-2" />
           </CardHeader>
           <CardContent>
             {tasks.length === 0 ? (
-              <div className="text-center py-8 text-gray-400">
+              <div className="text-center py-8 text-[#948979]">
                 <BookOpen className="w-10 h-10 mx-auto mb-2 opacity-50" />
                 <p className="text-[13.5px] font-medium">No tasks for today.</p>
                 <p className="text-[12px] mt-1">Add tasks from the Goals page.</p>
@@ -517,16 +517,16 @@ export default function DashboardPage() {
           <CardContent>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-[22px] font-semibold text-orange-600 tracking-tight">{formatHours(analytics.totalHours)}</p>
-                <p className="text-[11.5px] text-gray-400 font-medium mt-0.5">Total Study</p>
+                <p className="text-[22px] font-semibold text-[#DFD0B8] tracking-tight">{formatHours(analytics.totalHours)}</p>
+                <p className="text-[11.5px] text-[#948979] font-medium mt-0.5">Total Study</p>
               </div>
               <div>
-                <p className="text-[22px] font-semibold text-green-600 tracking-tight">{analytics.taskCompletionRate}%</p>
-                <p className="text-[11.5px] text-gray-400 font-medium mt-0.5">Task Rate</p>
+                <p className="text-[22px] font-semibold text-emerald-400 tracking-tight">{analytics.taskCompletionRate}%</p>
+                <p className="text-[11.5px] text-[#948979] font-medium mt-0.5">Task Rate</p>
               </div>
               <div>
-                <p className="text-[22px] font-semibold text-blue-600 tracking-tight">{analytics.goalCompletionRate || 0}%</p>
-                <p className="text-[11.5px] text-gray-400 font-medium mt-0.5">Goal Rate</p>
+                <p className="text-[22px] font-semibold text-sky-400 tracking-tight">{analytics.goalCompletionRate || 0}%</p>
+                <p className="text-[11.5px] text-[#948979] font-medium mt-0.5">Goal Rate</p>
               </div>
             </div>
           </CardContent>
