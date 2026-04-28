@@ -49,6 +49,13 @@ export async function GET(request: NextRequest) {
       .gte('date', format(subDays(today, 13), 'yyyy-MM-dd'))
       .lte('date', format(today, 'yyyy-MM-dd'));
 
+    // Fetch tasks for last 30 days for streak calculation (based on task completion)
+    const { data: streakTasks } = await supabase
+      .from('tasks')
+      .select('date, status')
+      .gte('date', format(subDays(today, 29), 'yyyy-MM-dd'))
+      .lte('date', format(today, 'yyyy-MM-dd'));
+
     // Fetch goals for the period
     const { data: goals, error: goalsError } = await supabase
       .from('goals')
@@ -140,16 +147,30 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Streak calculation
+    // Streak calculation - based on ALL tasks being completed for a day
+    // A day counts toward streak only if it has tasks AND all of them are completed
+    const tasksByDate: Record<string, { total: number; completed: number }> = {};
+    for (const task of streakTasks || []) {
+      if (!tasksByDate[task.date]) {
+        tasksByDate[task.date] = { total: 0, completed: 0 };
+      }
+      tasksByDate[task.date].total++;
+      if (task.status === 'completed') {
+        tasksByDate[task.date].completed++;
+      }
+    }
+
     let streak = 0;
     const checkDate = new Date(today);
     while (true) {
       const dateStr = format(checkDate, 'yyyy-MM-dd');
-      if (recentDailyMinutes[dateStr] && recentDailyMinutes[dateStr] > 0) {
+      const dayTasks = tasksByDate[dateStr];
+      if (dayTasks && dayTasks.total > 0 && dayTasks.total === dayTasks.completed) {
+        // All tasks for this day are completed
         streak++;
         checkDate.setDate(checkDate.getDate() - 1);
       } else if (dateStr === todayStr) {
-        // Don't break streak for today if no study yet
+        // Don't break streak for today if tasks aren't all done yet
         checkDate.setDate(checkDate.getDate() - 1);
       } else {
         break;
